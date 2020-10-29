@@ -3,6 +3,12 @@ import logo from './logo.svg';
 import styled from 'styled-components';
 import Header from './components/Header';
 import Windows from './components/Windows';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 const StyledApp = styled.div`
   background-color: white;
@@ -18,10 +24,16 @@ const StyledApp = styled.div`
 
 function App() {
   return (
+    <Router basename={process.env.PUBLIC_URL}>
     <StyledApp>
       <Header/>
-      <Windows/>
+      <Switch>
+        <Route exact path="/">
+        <Windows/>
+        </Route>
+      </Switch>
     </StyledApp>
+    </Router>
   );
 }
 
