@@ -12,12 +12,19 @@ const StyledFrontpage = styled.div`
     margin: 0 auto;
     margin-top: 40px;
   }
+
+  .by {
+      color: #0A3528;
+      text-align: center;
+      margin-top: 0.6rem;
+  }
 `;
 
 const Frontpage = () => {
   return (
     <StyledFrontpage>
       <img src={logo} />
+      <div className="by">By Offerspill</div>
       <Windows />
     </StyledFrontpage>
   );
