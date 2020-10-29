@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import styled from 'styled-components';
 import Header from './components/Header';
-import Windows from './components/Windows';
+import Frontpage from './components/Frontpage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,7 +28,7 @@ function App() {
       <Header/>
       <Switch>
         <Route exact path="/">
-        <Windows/>
+          <Frontpage/>
         </Route>
       </Switch>
     </StyledApp>
