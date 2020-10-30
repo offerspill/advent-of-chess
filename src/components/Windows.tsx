@@ -55,19 +55,23 @@ const StyledWindows = styled.div`
     transition: 0.5s;
     color: #f9f9f9;
 
-    background-color: #3AB99B;
+    background-color: #3ab99b;
     -o-transition: 0.5s;
     -ms-transition: 0.5s;
     -moz-transition: 0.5s;
     -webkit-transition: 0.5s;
     transition: 0.5s;
   }
+
+  .closed {
+    background-color: grey;
+    color: #ababab;
+  }
 `;
 
 const Windows = () => {
 
-    const windows = [...Array(24).keys()].map(key => key+1)
-    ;
+    const windows = [...Array(24).keys()].map(key => key+1);
 
     const even = (n: number) => {
         return (n % 2 === 0); 
