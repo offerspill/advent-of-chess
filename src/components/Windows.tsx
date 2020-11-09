@@ -77,6 +77,18 @@ const StyledWindows = styled.div`
     background-color: #7a8c88;
     color: #303836;
   }
+
+  a.link-window {
+    text-decoration: none;
+  }
+
+  a.link-window:hover {
+    transform: scale(1.02);
+  }
+
+  a.link-window:active {
+    transform: scale(0.98);
+  }
 `;
 
 interface WindowsProps {
@@ -97,11 +109,11 @@ const Windows = ({ posts }: WindowsProps) => {
 
         if (post) {
           return (
-            <div className={`window ${even(i + 1) ? "even" : "odd"}`}>
-              <Link className="link-luke" to={"/window/" + post.day}>
+            <Link className="link-window" to={"/window/" + post.day}>
+              <div className={`window ${even(i + 1) ? "even" : "odd"}`}>
                 {window}
-              </Link>
-            </div>
+              </div>
+            </Link>
           );
         } else {
           return (
