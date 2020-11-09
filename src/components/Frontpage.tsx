@@ -1,23 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Windows from "./Windows";
+import Logo from "./Logo";
 import logo from "../assets/logo.png";
 
 const StyledFrontpage = styled.div`
-  padding: 20px;
-
-  img {
-    display: block;
-    width: 300px;
-    margin: 0 auto;
-    margin-top: 40px;
-  }
-
-  .by {
-    color: #0a3528;
-    text-align: center;
-    margin-top: 0.6rem;
-  }
+  padding: 40px;
 `;
 
 interface FrontpageProps {
@@ -42,8 +30,6 @@ const Frontpage = ({ posts }: FrontpageProps) => {
 
   return (
     <StyledFrontpage>
-      <img src={logo} />
-      <div className="by">By Offerspill</div>
       <Windows posts={posts} />
     </StyledFrontpage>
   );

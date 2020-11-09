@@ -4,7 +4,8 @@ import Header from "./components/Header";
 import Frontpage from "./components/Frontpage";
 import { client } from "./sanity";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Window from "./components/Window";
+import Post from "./components/Post";
+import Logo from "./components/Logo";
 
 const StyledApp = styled.div`
   background-color: white;
@@ -20,7 +21,7 @@ const StyledApp = styled.div`
 function App() {
   const [posts, setPosts] = useState([]);
 
-  const day = 3;
+  const day = 24;
 
   const query = `*[_type == $type  && day <= ${day.toString(
     10
@@ -46,7 +47,7 @@ function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <StyledApp>
-        <Header />
+        <Logo />
         <Switch>
           <Route exact path="/">
             <Frontpage posts={posts} />
@@ -54,7 +55,7 @@ function App() {
           <Route
             path="/window/:nr"
             component={(props: any) => (
-              <Window nr={props.match.params.nr} posts={posts} />
+              <Post nr={props.match.params.nr} posts={posts} />
             )}
           />
         </Switch>

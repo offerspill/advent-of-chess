@@ -13,7 +13,7 @@ const StyledWindows = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
 
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 50px;
 
   @media (max-width: 800px) {

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Advent of Chess",
+  "name": "The Chess Advent Calendar",
   "icons": [
     {
       "src": "favicon.ico",
