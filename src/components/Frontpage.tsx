@@ -14,18 +14,37 @@ const StyledFrontpage = styled.div`
   }
 
   .by {
-      color: #0A3528;
-      text-align: center;
-      margin-top: 0.6rem;
+    color: #0a3528;
+    text-align: center;
+    margin-top: 0.6rem;
   }
 `;
 
-const Frontpage = () => {
+interface FrontpageProps {
+  posts: any;
+}
+
+const Frontpage = ({ posts }: FrontpageProps) => {
+  const compare = (a: any, b: any) => {
+    let aint = parseInt(a.day, 10);
+    let bint = parseInt(b.day, 10);
+
+    if (aint < bint) {
+      return -1;
+    }
+    if (aint > bint) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const postsSorted = posts.sort(compare);
+
   return (
     <StyledFrontpage>
       <img src={logo} />
       <div className="by">By Offerspill</div>
-      <Windows />
+      <Windows posts={posts} />
     </StyledFrontpage>
   );
 };

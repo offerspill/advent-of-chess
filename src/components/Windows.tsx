@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledWindows = styled.div`
   display: flex;
@@ -14,6 +15,10 @@ const StyledWindows = styled.div`
 
   margin-top: 50px;
   margin-bottom: 50px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 
   .window {
     height: 300px;
@@ -32,7 +37,7 @@ const StyledWindows = styled.div`
   }
 
   .even {
-    color: black;
+    color: #0a3528;
     -o-transition: 0.5s;
     -ms-transition: 0.5s;
     -moz-transition: 0.5s;
@@ -67,25 +72,47 @@ const StyledWindows = styled.div`
     background-color: grey;
     color: #ababab;
   }
+
+  .disabled {
+    background-color: #7a8c88;
+    color: #303836;
+  }
 `;
 
-const Windows = () => {
+interface WindowsProps {
+  posts: any;
+}
 
-    const windows = [...Array(24).keys()].map(key => key+1);
+const Windows = ({ posts }: WindowsProps) => {
+  const windows = [...Array(24).keys()].map((key) => key + 1);
 
-    const even = (n: number) => {
-        return (n % 2 === 0); 
-    }
+  const even = (n: number) => {
+    return n % 2 === 0;
+  };
 
   return (
     <StyledWindows>
       {windows.map((window: any, i: number) => {
-          return <div className={`window ${even(i+1) ? 'even' : 'odd'}`}>
+        const post = posts[i];
+
+        if (post) {
+          return (
+            <div className={`window ${even(i + 1) ? "even" : "odd"}`}>
+              <Link className="link-luke" to={"/window/" + post.day}>
+                {window}
+              </Link>
+            </div>
+          );
+        } else {
+          return (
+            <div className={`window ${even(i + 1) ? "even" : "odd"} disabled`}>
               {window}
-          </div>
+            </div>
+          );
+        }
       })}
     </StyledWindows>
   );
-}
+};
 
 export default Windows;

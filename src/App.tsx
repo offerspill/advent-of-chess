@@ -1,14 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import styled from 'styled-components';
-import Header from './components/Header';
-import Frontpage from './components/Frontpage';
-import { client } from "./sanity";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import Header from "./components/Header";
+import Frontpage from "./components/Frontpage";
+import { client } from "./sanity";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Window from "./components/Window";
 
 const StyledApp = styled.div`
   background-color: white;
@@ -19,30 +15,33 @@ const StyledApp = styled.div`
   bottom: 0;
   right: 0;
   overflow: auto;
-
 `;
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const query = `*[_type == $type]`;
 
+  const day = 3;
 
-    useEffect(() => {
-      const fetchPosts = () => {
-        client
-          .fetch(query, { type: 'post'})
-          .then((res: any) => {
-            setPosts(res);
-          })
-          .catch((err: Error) => {
-            console.log("err", err);
-            console.error("Oh no, error occured: ", err);
-          });
-      };
-      fetchPosts();
-    }, []);
+  const query = `*[_type == $type  && day <= ${day.toString(
+    10
+  )}]{author, body, title, day}`;
 
-    console.log(posts);
+  useEffect(() => {
+    const fetchPosts = () => {
+      client
+        .fetch(query, { type: "post" })
+        .then((res: any) => {
+          setPosts(res);
+        })
+        .catch((err: Error) => {
+          console.log("err", err);
+          console.error("Oh no, error occured: ", err);
+        });
+    };
+    fetchPosts();
+  }, []);
+
+  console.log(posts);
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
@@ -50,8 +49,14 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <Frontpage />
+            <Frontpage posts={posts} />
           </Route>
+          <Route
+            path="/window/:nr"
+            component={(props: any) => (
+              <Window nr={props.match.params.nr} posts={posts} />
+            )}
+          />
         </Switch>
       </StyledApp>
     </Router>
