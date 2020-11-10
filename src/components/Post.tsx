@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 const BlockContent = require("@sanity/block-content-to-react");
 
 const StyledPost = styled.div`
@@ -18,6 +19,7 @@ const StyledPost = styled.div`
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.5;
+    font-weight: 300;
   }
 
   figure {
@@ -37,13 +39,38 @@ interface WindowProps {
   posts: any;
 }
 
+const url =
+  "https://script.google.com/macros/s/AKfycbzSIv9kL_bfqLV2ncEwTc1GJl6CDounQD99hOtHvqN67hGhMjQ/exec";
+
 const Post = ({ nr, posts }: WindowProps) => {
-  console.log(posts);
+  const { register, handleSubmit } = useForm();
   const post = posts.find((post: any) => post.day == nr);
 
   if (!post) return null;
 
   console.log(post);
+
+  const onSubmit = (formData: any) => {
+    const data = new FormData();
+
+    data.set("Email", formData.email);
+    data.set("Name", formData.name);
+    data.set("Day", nr);
+    data.set("Answer", formData.answer);
+
+    fetch(url, {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("YEP");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
     <StyledPost>
@@ -56,6 +83,18 @@ const Post = ({ nr, posts }: WindowProps) => {
           dataset="production"
         />
       </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Email</label>
+        <input ref={register} name="email" />
+
+        <label>Name</label>
+        <input ref={register} name="name" />
+
+        <label>Answer</label>
+        <textarea ref={register} name="answer" />
+
+        <button>Submit</button>
+      </form>
     </StyledPost>
   );
 };
