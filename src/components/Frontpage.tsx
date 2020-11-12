@@ -5,7 +5,8 @@ import Logo from "./Logo";
 import logo from "../assets/logo.png";
 
 const StyledFrontpage = styled.div`
-  padding: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 `;
 
 interface FrontpageProps {

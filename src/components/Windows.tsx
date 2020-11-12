@@ -9,15 +9,23 @@ const StyledWindows = styled.div`
   margin: 0 auto;
   background-color: #0a3528;
 
-  width: 1320px;
+  max-width: 1320px;
   padding-top: 20px;
   padding-bottom: 20px;
 
   margin-top: 20px;
   margin-bottom: 50px;
 
+  @media (max-width: 1390px) {
+    max-width: 1000px;
+  }
+
+  @media (max-width: 1075px) {
+    max-width: 680px;
+  }
+
   @media (max-width: 800px) {
-    flex-direction: column;
+    width: 360px;
   }
 
   .window {
