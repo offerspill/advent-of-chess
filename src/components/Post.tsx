@@ -2,7 +2,16 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Input, Button, TextField } from "@material-ui/core";
+import {
+  Input,
+  Button,
+  TextField,
+  Collapse,
+  IconButton,
+} from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { CloseSharp } from "@material-ui/icons";
+
 const BlockContent = require("@sanity/block-content-to-react");
 
 const StyledPost = styled.div`
@@ -76,6 +85,12 @@ const StyledPost = styled.div`
       margin-bottom: 20px;
     }
   }
+
+  .submitFeedback {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
 `;
 
 interface WindowProps {
@@ -92,6 +107,9 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
+  const [openError, setOpenError] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
 
@@ -100,6 +118,7 @@ const Post = ({ nr, posts }: WindowProps) => {
   const onSubmit = (formData: any) => {
     if (success) {
       setAlreadySubmitted(true);
+      setOpenInfo(true);
       return;
     }
 
@@ -122,10 +141,12 @@ const Post = ({ nr, posts }: WindowProps) => {
         .then((response) => {
           if (response.ok) {
             setSuccess(true);
+            setOpenSuccess(true);
           }
         })
         .catch((error) => {
           setSubmitError(true);
+          setOpenError(true);
           console.error("Error:", error);
         })
         .finally(() => {
@@ -207,19 +228,73 @@ const Post = ({ nr, posts }: WindowProps) => {
         >
           Submit
         </Button>
+      </form>
+
+      <div className="submitFeedback">
         {success && !alreadySubmitted && (
-          <h2>Your answer has been submitted!</h2>
+          <Collapse in={openSuccess}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpenSuccess(false);
+                  }}
+                >
+                  <CloseSharp fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              Your answer has been submitted!
+            </Alert>
+          </Collapse>
         )}
         {alreadySubmitted && (
-          <h2>You have already submitted an answer for this question.</h2>
+          <Collapse in={openInfo}>
+            <Alert
+              severity="info"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpenInfo(false);
+                  }}
+                >
+                  <CloseSharp fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              You have already submitted an answer
+            </Alert>
+          </Collapse>
         )}
         {submitError && (
-          <h2>
-            Something went wrong. Please try again and contact us if the error
-            persists{" "}
-          </h2>
+          <Collapse in={openError}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpenError(false);
+                  }}
+                >
+                  <CloseSharp fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              Oops! Something went wrong. Please try again or contact us if the
+              problem persists
+            </Alert>
+          </Collapse>
         )}
-      </form>
+      </div>
     </StyledPost>
   );
 };
