@@ -109,7 +109,7 @@ const Windows = ({ posts }: WindowsProps) => {
 
         if (post) {
           return (
-            <Link className="link-window" to={"/window/" + post.day}>
+            <Link className="link-window" to={"/day/" + post.day}>
               <div className={`window ${even(i + 1) ? "even" : "odd"}`}>
                 {window}
               </div>

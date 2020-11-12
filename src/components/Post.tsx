@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Input, Button, TextField } from "@material-ui/core";
 const BlockContent = require("@sanity/block-content-to-react");
 
 const StyledPost = styled.div`
@@ -32,6 +34,44 @@ const StyledPost = styled.div`
       margin: 0 auto;
     }
   }
+
+  form {
+    margin: 0 auto;
+    margin-top: 5rem;
+    max-width: 600px;
+
+    h1,
+    h2,
+    h3 {
+      text-align: center;
+    }
+
+    .formElements {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      .textfield {
+        margin-bottom: 2rem;
+      }
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .buttonSuccess {
+      background-color: #4baf51;
+    }
+
+    .buttonProgress {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 interface WindowProps {
@@ -43,33 +83,51 @@ const url =
   "https://script.google.com/macros/s/AKfycbzSIv9kL_bfqLV2ncEwTc1GJl6CDounQD99hOtHvqN67hGhMjQ/exec";
 
 const Post = ({ nr, posts }: WindowProps) => {
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit, register, errors } = useForm();
   const post = posts.find((post: any) => post.day == nr);
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  const timer = useRef();
 
   if (!post) return null;
 
   console.log(post);
 
   const onSubmit = (formData: any) => {
-    const data = new FormData();
+    if (success) {
+      setAlreadySubmitted(true);
+      return;
+    }
 
-    data.set("Email", formData.email);
-    data.set("Name", formData.name);
-    data.set("Day", nr);
-    data.set("Answer", formData.answer);
+    if (!loading) {
+      setSuccess(false);
+      setLoading(true);
 
-    fetch(url, {
-      method: "POST",
-      body: data,
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("YEP");
-        }
+      const data = new FormData();
+
+      data.set("Email", formData.email);
+      data.set("Name", formData.name);
+      data.set("Day", nr);
+      data.set("Answer", formData.answer);
+
+      fetch(url, {
+        method: "POST",
+        body: data,
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            setSuccess(true);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   return (
@@ -84,16 +142,57 @@ const Post = ({ nr, posts }: WindowProps) => {
         />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Email</label>
-        <input ref={register} name="email" />
+        <h2>Submit answer</h2>
 
-        <label>Name</label>
-        <input ref={register} name="name" />
+        <div className="formElements">
+          <TextField
+            className="textfield"
+            inputRef={register({
+              required: "Required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "invalid email address",
+              },
+            })}
+            name="email"
+            label="Email"
+            variant="filled"
+            error={errors.email}
+            helperText={errors.email && "Invalid email"}
+          />
+          <TextField
+            className="textfield"
+            inputRef={register({ required: "Required" })}
+            name="name"
+            label="Name"
+            variant="filled"
+            error={errors.name}
+            helperText={errors.name && "This field is required"}
+          />
 
-        <label>Answer</label>
-        <textarea ref={register} name="answer" />
+          <TextField
+            className="textfield"
+            inputRef={register({ required: "Required" })}
+            name="answer"
+            label="Answer"
+            variant="filled"
+            error={errors.answer}
+            helperText={errors.answer && "This field is required"}
+          />
+        </div>
 
-        <button>Submit</button>
+        {loading && <CircularProgress size={24} className="buttonProgress" />}
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={`button-submit ${success ? "buttonSuccess" : ""}`}
+          disabled={loading}
+        >
+          Submit
+        </Button>
+        {alreadySubmitted && <h2>You have already submitted an answer.</h2>}
       </form>
     </StyledPost>
   );

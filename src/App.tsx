@@ -53,7 +53,7 @@ function App() {
             <Frontpage posts={posts} />
           </Route>
           <Route
-            path="/window/:nr"
+            path="/day/:nr"
             component={(props: any) => (
               <Post nr={props.match.params.nr} posts={posts} />
             )}
