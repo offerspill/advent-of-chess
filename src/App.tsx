@@ -6,16 +6,10 @@ import { client } from "./sanity";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Post from "./components/Post";
 import Logo from "./components/Logo";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const StyledApp = styled.div`
   background-color: white;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
 `;
 
 function App() {
@@ -48,6 +42,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <StyledApp>
         <Logo />
+        <ScrollToTop />
         <Switch>
           <Route exact path="/">
             <Frontpage posts={posts} />
