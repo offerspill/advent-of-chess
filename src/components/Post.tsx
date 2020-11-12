@@ -66,6 +66,10 @@ const StyledPost = styled.div`
       background-color: #4baf51;
     }
 
+    .buttonSubmitError {
+      background-color: #ff7561;
+    }
+
     .buttonProgress {
       display: block;
       margin: 0 auto;
@@ -88,12 +92,10 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
-  const timer = useRef();
 
   if (!post) return null;
-
-  console.log(post);
 
   const onSubmit = (formData: any) => {
     if (success) {
@@ -102,6 +104,7 @@ const Post = ({ nr, posts }: WindowProps) => {
     }
 
     if (!loading) {
+      setSubmitError(false);
       setSuccess(false);
       setLoading(true);
 
@@ -122,6 +125,7 @@ const Post = ({ nr, posts }: WindowProps) => {
           }
         })
         .catch((error) => {
+          setSubmitError(true);
           console.error("Error:", error);
         })
         .finally(() => {
@@ -170,6 +174,15 @@ const Post = ({ nr, posts }: WindowProps) => {
             helperText={errors.name && "This field is required"}
           />
 
+          {/*<TextField
+            className="textfield"
+            inputRef={register}
+            name="displayName"
+            label="Display name"
+            variant="filled"
+            helperText="Optional. Only needed if you want your name on the highscores."
+          />*/}
+
           <TextField
             className="textfield"
             inputRef={register({ required: "Required" })}
@@ -187,12 +200,25 @@ const Post = ({ nr, posts }: WindowProps) => {
           type="submit"
           variant="contained"
           color="primary"
-          className={`button-submit ${success ? "buttonSuccess" : ""}`}
+          className={`button-submit ${success ? "buttonSuccess" : ""} ${
+            submitError ? "buttonSubmitError" : ""
+          }`}
           disabled={loading}
         >
           Submit
         </Button>
-        {alreadySubmitted && <h2>You have already submitted an answer.</h2>}
+        {success && !alreadySubmitted && (
+          <h2>Your answer has been submitted!</h2>
+        )}
+        {alreadySubmitted && (
+          <h2>You have already submitted an answer for this question.</h2>
+        )}
+        {submitError && (
+          <h2>
+            Something went wrong. Please try again and contact us if the error
+            persists{" "}
+          </h2>
+        )}
       </form>
     </StyledPost>
   );
