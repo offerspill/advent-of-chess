@@ -2,15 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {
-  Input,
-  Button,
-  TextField,
-  Collapse,
-  IconButton,
-} from "@material-ui/core";
+import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import Chessground from "react-chessground";
+import "react-chessground/dist/styles/chessground.css";
 import { CloseSharp } from "@material-ui/icons";
+import validateFEN from "fen-validator";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -93,10 +90,41 @@ const StyledPost = styled.div`
   }
 `;
 
+const chessgroundStyle = {
+  margin: "0 auto",
+  marginTop: "4rem",
+  marginBottom: "2rem",
+};
+
 interface WindowProps {
   nr: any;
   posts: any;
 }
+
+const serializers = {
+  types: {
+    code: (props: any) => (
+      <pre data-language={props.node.language}>
+        <code>{props.node.code}</code>
+      </pre>
+    ),
+    chessground: (props: any) => {
+      if (!validateFEN(props.node.fen)) {
+        return <h2>Illegal FEN string</h2>;
+      }
+      return (
+        <Chessground
+          orientation="white"
+          drawable={{ enabled: false }}
+          width="400px"
+          height="400px"
+          fen={props.node.fen}
+          style={chessgroundStyle}
+        />
+      );
+    },
+  },
+};
 
 const url =
   "https://script.google.com/macros/s/AKfycbzSIv9kL_bfqLV2ncEwTc1GJl6CDounQD99hOtHvqN67hGhMjQ/exec";
@@ -164,6 +192,7 @@ const Post = ({ nr, posts }: WindowProps) => {
           imageOptions={{ w: 550 }}
           projectId="l3m1tz9l"
           dataset="production"
+          serializers={serializers}
         />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
