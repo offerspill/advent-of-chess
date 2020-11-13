@@ -122,7 +122,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   if (!post) return null;
 
-  const StyledChessGround = styled.div`
+  const StyledChessGround = styled(Chessground)`
     margin: 0 auto;
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -141,15 +141,16 @@ const Post = ({ nr, posts }: WindowProps) => {
           return <h2>Illegal FEN string</h2>;
         }
         return (
-          <StyledChessGround>
-            <Chessground
-              orientation="white"
-              drawable={{ enabled: false }}
-              width={`${boardSize}px`}
-              height={`${boardSize}px`}
-              fen={props.node.fen}
-            />
-          </StyledChessGround>
+          <StyledChessGround
+            orientation="white"
+            drawable={{ enabled: false }}
+            width={`${boardSize}px`}
+            height={`${boardSize}px`}
+            fen={props.node.fen}
+            movable={{ free: false }}
+            highlight={{ lastMove: false }}
+            draggable={{ enabled: false }}
+          />
         );
       },
     },
