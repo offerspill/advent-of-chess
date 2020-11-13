@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -90,48 +90,18 @@ const StyledPost = styled.div`
   }
 `;
 
-const chessgroundStyle = {
-  margin: "0 auto",
-  marginTop: "4rem",
-  marginBottom: "2rem",
-};
-
 interface WindowProps {
-  nr: any;
+  nr: string;
   posts: any;
 }
-
-const serializers = {
-  types: {
-    code: (props: any) => (
-      <pre data-language={props.node.language}>
-        <code>{props.node.code}</code>
-      </pre>
-    ),
-    chessground: (props: any) => {
-      if (!validateFEN(props.node.fen)) {
-        return <h2>Illegal FEN string</h2>;
-      }
-      return (
-        <Chessground
-          orientation="white"
-          drawable={{ enabled: false }}
-          width="400px"
-          height="400px"
-          fen={props.node.fen}
-          style={chessgroundStyle}
-        />
-      );
-    },
-  },
-};
 
 const url =
   "https://script.google.com/macros/s/AKfycbzSIv9kL_bfqLV2ncEwTc1GJl6CDounQD99hOtHvqN67hGhMjQ/exec";
 
 const Post = ({ nr, posts }: WindowProps) => {
   const { handleSubmit, register, errors } = useForm();
-  const post = posts.find((post: any) => post.day == nr);
+
+  const post = posts.find((post: any) => post.day.toString(10) === nr);
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -141,7 +111,49 @@ const Post = ({ nr, posts }: WindowProps) => {
   const [submitError, setSubmitError] = useState(false);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
 
+  const [boardSize, setBoardSize] = useState(600);
+
+  useEffect(() => {
+    let bodyWidth = document.body.clientWidth - 100;
+    if (bodyWidth > 600) bodyWidth = 600;
+
+    setBoardSize(bodyWidth);
+  }, []);
+
   if (!post) return null;
+
+  const StyledChessGround = styled.div`
+    margin: 0 auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: ${boardSize}px;
+  `;
+
+  const serializers = {
+    types: {
+      code: (props: any) => (
+        <pre data-language={props.node.language}>
+          <code>{props.node.code}</code>
+        </pre>
+      ),
+      chessground: (props: any) => {
+        if (!validateFEN(props.node.fen)) {
+          return <h2>Illegal FEN string</h2>;
+        }
+        return (
+          <StyledChessGround>
+            <Chessground
+              orientation="white"
+              drawable={{ enabled: false }}
+              width={`${boardSize}px`}
+              height={`${boardSize}px`}
+              fen={props.node.fen}
+            />
+          </StyledChessGround>
+        );
+      },
+    },
+  };
 
   const onSubmit = (formData: any) => {
     if (success) {
