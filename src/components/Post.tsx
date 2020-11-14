@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Alert from "@material-ui/lab/Alert";
 import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
@@ -90,6 +94,13 @@ const StyledPost = styled.div`
   }
 `;
 
+const StyledClosedSubmissions = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 4rem;
+  text-align: center;
+`;
+
 interface WindowProps {
   nr: string;
   posts: any;
@@ -112,6 +123,13 @@ const Post = ({ nr, posts }: WindowProps) => {
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
 
   const [boardSize, setBoardSize] = useState(600);
+
+  const date = new Date(2020, 10, parseInt("13", 10), 2, 20, 0).getTime();
+  const currDate = new Date().getTime();
+
+  const diff = currDate - date;
+
+  const openSubmission = diff < 86400000;
 
   useEffect(() => {
     let bodyWidth = document.body.clientWidth - 100;
@@ -212,135 +230,151 @@ const Post = ({ nr, posts }: WindowProps) => {
           serializers={serializers}
         />
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Submit answer</h2>
+      {openSubmission ? (
+        <>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <h2>Submit answer</h2>
 
-        <div className="formElements">
-          <TextField
-            className="textfield"
-            inputRef={register({
-              required: "Required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "invalid email address",
-              },
-            })}
-            name="email"
-            label="Email"
-            variant="filled"
-            error={errors.email}
-            helperText={errors.email && "Invalid email"}
-          />
-          <TextField
-            className="textfield"
-            inputRef={register({ required: "Required" })}
-            name="name"
-            label="Name"
-            variant="filled"
-            error={errors.name}
-            helperText={errors.name && "This field is required"}
-          />
+            <div className="formElements">
+              <TextField
+                className="textfield"
+                inputRef={register({
+                  required: "Required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "invalid email address",
+                  },
+                })}
+                name="email"
+                label="Email"
+                variant="filled"
+                error={errors.email}
+                helperText={errors.email && "Invalid email"}
+              />
+              <TextField
+                className="textfield"
+                inputRef={register({ required: "Required" })}
+                name="name"
+                label="Name"
+                variant="filled"
+                error={errors.name}
+                helperText={errors.name && "This field is required"}
+              />
 
-          {/*<TextField
-            className="textfield"
-            inputRef={register}
-            name="displayName"
-            label="Display name"
-            variant="filled"
-            helperText="Optional. Only needed if you want your name on the highscores."
-          />*/}
+              <TextField
+                className="textfield"
+                inputRef={register({ required: "Required" })}
+                name="answer"
+                label="Answer"
+                variant="filled"
+                error={errors.answer}
+                helperText={errors.answer && "This field is required"}
+              />
+            </div>
 
-          <TextField
-            className="textfield"
-            inputRef={register({ required: "Required" })}
-            name="answer"
-            label="Answer"
-            variant="filled"
-            error={errors.answer}
-            helperText={errors.answer && "This field is required"}
-          />
-        </div>
+            {loading && (
+              <CircularProgress size={24} className="buttonProgress" />
+            )}
 
-        {loading && <CircularProgress size={24} className="buttonProgress" />}
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={`button-submit ${success ? "buttonSuccess" : ""} ${
-            submitError ? "buttonSubmitError" : ""
-          }`}
-          disabled={loading}
-        >
-          Submit
-        </Button>
-      </form>
-
-      <div className="submitFeedback">
-        {success && !alreadySubmitted && (
-          <Collapse in={openSuccess}>
-            <Alert
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenSuccess(false);
-                  }}
-                >
-                  <CloseSharp fontSize="inherit" />
-                </IconButton>
-              }
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={`button-submit ${success ? "buttonSuccess" : ""} ${
+                submitError ? "buttonSubmitError" : ""
+              }`}
+              disabled={loading}
             >
-              Your answer has been submitted!
-            </Alert>
-          </Collapse>
-        )}
-        {alreadySubmitted && (
-          <Collapse in={openInfo}>
-            <Alert
-              severity="info"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenInfo(false);
-                  }}
+              Submit
+            </Button>
+          </form>
+
+          <div className="submitFeedback">
+            {success && !alreadySubmitted && (
+              <Collapse in={openSuccess}>
+                <Alert
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenSuccess(false);
+                      }}
+                    >
+                      <CloseSharp fontSize="inherit" />
+                    </IconButton>
+                  }
                 >
-                  <CloseSharp fontSize="inherit" />
-                </IconButton>
-              }
-            >
-              You have already submitted an answer
-            </Alert>
-          </Collapse>
-        )}
-        {submitError && (
-          <Collapse in={openError}>
-            <Alert
-              severity="error"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenError(false);
-                  }}
+                  Your answer has been submitted!
+                </Alert>
+              </Collapse>
+            )}
+            {alreadySubmitted && (
+              <Collapse in={openInfo}>
+                <Alert
+                  severity="info"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenInfo(false);
+                      }}
+                    >
+                      <CloseSharp fontSize="inherit" />
+                    </IconButton>
+                  }
                 >
-                  <CloseSharp fontSize="inherit" />
-                </IconButton>
-              }
+                  You have already submitted an answer
+                </Alert>
+              </Collapse>
+            )}
+            {submitError && (
+              <Collapse in={openError}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenError(false);
+                      }}
+                    >
+                      <CloseSharp fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  Oops! Something went wrong. Please try again or contact us if
+                  the problem persists
+                </Alert>
+              </Collapse>
+            )}
+          </div>
+        </>
+      ) : (
+        <StyledClosedSubmissions>
+          <h2>Closed</h2>
+
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              Oops! Something went wrong. Please try again or contact us if the
-              problem persists
-            </Alert>
-          </Collapse>
-        )}
-      </div>
+              Show solution
+            </AccordionSummary>
+            <AccordionDetails>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </AccordionDetails>
+          </Accordion>
+        </StyledClosedSubmissions>
+      )}
     </StyledPost>
   );
 };
