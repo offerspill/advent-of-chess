@@ -11,7 +11,7 @@ import Alert from "@material-ui/lab/Alert";
 import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import { CloseSharp } from "@material-ui/icons";
-import validateFEN from "fen-validator";
+import { validateFEN } from "../utils/chessUtils";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -162,6 +162,7 @@ const Post = ({ nr, posts }: WindowProps) => {
         if (!validateFEN(props.node.fen)) {
           return <h2>Illegal FEN string</h2>;
         }
+
         return (
           <StyledChessGround>
             <Chessground
