@@ -124,7 +124,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const [boardSize, setBoardSize] = useState(600);
 
-  const date = new Date(2020, 10, parseInt("13", 10), 2, 20, 0).getTime();
+  const date = new Date(2020, 10, parseInt("13", 11), 2, 20, 0).getTime();
   const currDate = new Date().getTime();
 
   const diff = currDate - date;

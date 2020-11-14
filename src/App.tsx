@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     const fetchPosts = () => {
       client
-        .fetch(query, { type: "post" })
+        .fetch(query, { type: "advent_post" })
         .then((res: any) => {
           setPosts(res);
         })
