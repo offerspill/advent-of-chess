@@ -122,7 +122,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   if (!post) return null;
 
-  const StyledChessGround = styled(Chessground)`
+  const StyledChessGround = styled.div`
     margin: 0 auto;
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -137,20 +137,24 @@ const Post = ({ nr, posts }: WindowProps) => {
         </pre>
       ),
       chessground: (props: any) => {
+        const orientation = props.node.orientation
+          ? props.node.orientation
+          : "white";
+
         if (!validateFEN(props.node.fen)) {
           return <h2>Illegal FEN string</h2>;
         }
         return (
-          <StyledChessGround
-            orientation="white"
-            drawable={{ enabled: false }}
-            width={`${boardSize}px`}
-            height={`${boardSize}px`}
-            fen={props.node.fen}
-            movable={{ free: false }}
-            highlight={{ lastMove: false }}
-            draggable={{ enabled: false }}
-          />
+          <StyledChessGround>
+            <Chessground
+              orientation={orientation}
+              drawable={{ enabled: false }}
+              width={`${boardSize}px`}
+              height={`${boardSize}px`}
+              fen={props.node.fen}
+              viewOnly={true}
+            />
+          </StyledChessGround>
         );
       },
     },
