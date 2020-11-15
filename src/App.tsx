@@ -7,6 +7,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Post from "./components/Post";
 import Logo from "./components/Logo";
 import ScrollToTop from "./utils/ScrollToTop";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import UserProvider from "./providers/UserProvider";
+import ProfilePage from "./components/ProfilePage";
+import PasswordReset from "./components/PasswordReset";
 
 const StyledApp = styled.div`
   background-color: white;
