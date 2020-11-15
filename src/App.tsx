@@ -45,21 +45,36 @@ function App() {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <StyledApp>
-        <Logo />
-        <ScrollToTop />
-        <Switch>
-          <Route exact path="/">
-            <Frontpage posts={posts} />
-          </Route>
-          <Route
-            path="/day/:nr"
-            component={(props: any) => (
-              <Post nr={props.match.params.nr} posts={posts} />
-            )}
-          />
-        </Switch>
-      </StyledApp>
+      <UserProvider>
+        <Header />
+        <StyledApp>
+          <Logo />
+          <ScrollToTop />
+          <Switch>
+            <Route exact path="/">
+              <Frontpage posts={posts} />
+            </Route>
+            <Route
+              path="/day/:nr"
+              component={(props: any) => (
+                <Post nr={props.match.params.nr} posts={posts} />
+              )}
+            />
+            <Route exact path="/signin">
+              <SignIn />
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
+            </Route>
+            <Route exact path="/profile">
+              <ProfilePage />
+            </Route>
+            <Route exact path="/reset">
+              <PasswordReset />
+            </Route>
+          </Switch>
+        </StyledApp>
+      </UserProvider>
     </Router>
   );
 }
