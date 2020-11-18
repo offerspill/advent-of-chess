@@ -1,123 +1,197 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   auth,
   generateUserDocument,
   getUniqueLowercaseUsernames,
 } from "../firebase/firebaseConfig";
+import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import { UserContext } from "../providers/UserProvider";
+import styled from "styled-components";
+
+const StyledSignUp = styled.div`
+  margin-top: 6rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  .signedIn {
+    margin-top: 2rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+  }
+
+  form {
+    margin: 0 auto;
+    margin-top: 5rem;
+    max-width: 600px;
+
+    .formElements {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      .textfield {
+        margin-bottom: 2rem;
+      }
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .buttonSuccess {
+      background-color: #4baf51;
+    }
+
+    .buttonSubmitError {
+      background-color: #ff7561;
+    }
+
+    .buttonProgress {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
+
+  .noAccount {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 2rem;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-right: 1rem;
+    }
+
+    .margin-top {
+      margin-top: 1rem;
+    }
+  }
+
+  .signedin {
+    h3 {
+      margin-right: 1rem;
+    }
+    .notyou  {
+      display: flex;
+
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+`;
+
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [error, setError] = useState("");
+  const user = useContext(UserContext);
+  const { handleSubmit, register, errors } = useForm();
 
-  const createUserWithEmailAndPasswordHandler = async (
-    event: any,
-    email: any,
-    password: any
-  ) => {
-    event.preventDefault();
-
+  const onSubmit = async (formData: any) => {
+    const { displayName, email, password } = formData;
     const usernames = await getUniqueLowercaseUsernames();
 
     if (usernames.includes(displayName.toLowerCase())) {
       console.error("Username already taken");
-
-      setError("Username already taken");
-      setDisplayName("");
       return;
     }
 
     const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
+    /*
     if (user != null) {
       user?.sendEmailVerification();
     }
+    */
 
     generateUserDocument(user, { displayName });
-
-    setEmail("");
-    setPassword("");
-    setDisplayName("");
   };
 
-  const onChangeHandler = (event: any) => {
-    const { name, value } = event.currentTarget;
-    if (name === "userEmail") {
-      setEmail(value);
-    } else if (name === "userPassword") {
-      setPassword(value);
-    } else if (name === "displayName") {
-      setDisplayName(value);
-    }
-  };
   return (
-    <div className="mt-8">
-      <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
-      <div className="border border-blue-400 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
-        {error !== null && (
-          <div className="py-4 bg-red-600 w-full text-white text-center mb-3">
-            {error}
+    <StyledSignUp>
+      {!user ? (
+        <>
+          {" "}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <h2>Register</h2>
+            <div className="formElements">
+              <TextField
+                className="textfield"
+                inputRef={register({
+                  required: "Required",
+                })}
+                name="displayName"
+                label="Username"
+                variant="filled"
+                error={errors.username}
+                helperText={errors.username && "Invalid username"}
+              />
+              <TextField
+                className="textfield"
+                inputRef={register({
+                  required: "Required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "invalid email address",
+                  },
+                })}
+                name="email"
+                label="Email"
+                variant="filled"
+                error={errors.email}
+                helperText={errors.email && "Invalid email"}
+              />
+              <TextField
+                className="textfield"
+                inputRef={register({ required: "Required" })}
+                name="password"
+                type="password"
+                label="Password"
+                variant="filled"
+                error={errors.name}
+                helperText={errors.name && "This field is required"}
+              />
+            </div>
+            <Button type="submit" variant="contained" color="primary">
+              Register
+            </Button>
+          </form>
+          <p className="noAccount">
+            <div className="margin-top">
+              <span>Already have an account?</span>
+              <Link to="signin" className="text-blue-500 hover:text-blue-600">
+                Sign in here
+              </Link>
+            </div>
+          </p>
+        </>
+      ) : (
+        <div className="signedin">
+          <h2>You're signed in as {user.displayName}!</h2>
+          <div className="notyou">
+            <h3>Not you?</h3>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                auth.signOut();
+              }}
+            >
+              Sign out
+            </Button>
           </div>
-        )}
-        <form className="">
-          <label htmlFor="displayName" className="block">
-            Display Name:
-          </label>
-          <input
-            type="text"
-            className="my-1 p-1 w-full "
-            name="displayName"
-            value={displayName}
-            placeholder="E.g: Faruq"
-            id="displayName"
-            onChange={(event) => onChangeHandler(event)}
-          />
-          <label htmlFor="userEmail" className="block">
-            Email:
-          </label>
-          <input
-            type="email"
-            className="my-1 p-1 w-full"
-            name="userEmail"
-            value={email}
-            placeholder="E.g: faruq123@gmail.com"
-            id="userEmail"
-            onChange={(event) => onChangeHandler(event)}
-          />
-          <label htmlFor="userPassword" className="block">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="mt-1 mb-3 p-1 w-full"
-            name="userPassword"
-            value={password}
-            placeholder="Your Password"
-            id="userPassword"
-            onChange={(event) => onChangeHandler(event)}
-          />
-          <button
-            className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
-            onClick={(event) => {
-              createUserWithEmailAndPasswordHandler(event, email, password);
-            }}
-          >
-            Sign up
-          </button>
-        </form>
-        <p className="text-center my-3">or</p>
-        <button className="bg-red-500 hover:bg-red-600 w-full py-2 text-white">
-          Sign In with Google
-        </button>
-        <p className="text-center my-3">
-          Already have an account?{" "}
-          <Link to="/" className="text-blue-500 hover:text-blue-600">
-            Sign in here
-          </Link>
-        </p>
-      </div>
-    </div>
+        </div>
+      )}
+    </StyledSignUp>
   );
 };
 export default SignUp;
