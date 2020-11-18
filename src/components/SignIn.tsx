@@ -83,8 +83,6 @@ const SignIn = () => {
   const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = (formData: any) => {
-    console.log("SUBMITTING", formData);
-
     auth
       .signInWithEmailAndPassword(formData.email, formData.password)
       .catch((error) => {

@@ -41,8 +41,6 @@ function App() {
     fetchPosts();
   }, []);
 
-  console.log(posts);
-
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <UserProvider>

@@ -62,7 +62,9 @@ const Header = () => {
                 </Button>
               </>
             ) : (
-              <Button color="inherit">Login</Button>
+              <Button color="inherit">
+                <Link to="/signin">SIGN IN</Link>
+              </Button>
             )}
           </div>
         </Toolbar>

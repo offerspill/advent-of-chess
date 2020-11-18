@@ -3,7 +3,6 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 
 function ScrollToTop({ history }: RouteComponentProps) {
   useEffect(() => {
-    console.log("HEPP");
     const unlisten = history.listen(() => {
       window.scrollTo(0, 0);
     });
