@@ -13,6 +13,7 @@ import "react-chessground/dist/styles/chessground.css";
 import { CloseSharp } from "@material-ui/icons";
 import { validateFEN } from "../utils/chessUtils";
 import { UserContext } from "../providers/UserProvider";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -183,6 +184,28 @@ const Post = ({ nr, posts }: WindowProps) => {
       setAlreadySubmitted(true);
       setOpenInfo(true);
       return;
+    }
+
+    if (user && user.uid) {
+      const alreadyPosted = reactLocalStorage.get(user.uid + nr);
+
+      if (alreadyPosted) {
+        setAlreadySubmitted(true);
+        setOpenInfo(true);
+        return;
+      } else {
+        reactLocalStorage.set(user.uid + nr, true);
+      }
+    } else {
+      const alreadyPosted = reactLocalStorage.get(formData.email + nr);
+
+      if (alreadyPosted) {
+        setAlreadySubmitted(true);
+        setOpenInfo(true);
+        return;
+      } else {
+        reactLocalStorage.set(formData.email + nr, true);
+      }
     }
 
     if (!loading) {
