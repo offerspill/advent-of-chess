@@ -10,6 +10,12 @@ code {
     monospace;
 }
 
+/*
 .MuiPaper-root {
+  background-color: #3ab99b !important;
+}
+*/
+
+.MuiAppBar-colorPrimary {
   background-color: #3ab99b !important;
 }

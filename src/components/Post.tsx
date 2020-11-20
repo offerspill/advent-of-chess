@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -12,6 +12,8 @@ import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import { CloseSharp } from "@material-ui/icons";
 import { validateFEN } from "../utils/chessUtils";
+import { UserContext } from "../providers/UserProvider";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -106,16 +108,13 @@ interface WindowProps {
   posts: any;
 }
 
-const url =
-  "https://script.google.com/macros/s/AKfycbzSIv9kL_bfqLV2ncEwTc1GJl6CDounQD99hOtHvqN67hGhMjQ/exec";
-
 const Post = ({ nr, posts }: WindowProps) => {
   const { handleSubmit, register, errors } = useForm();
+  const user = useContext(UserContext);
 
   const post = posts.find((post: any) => post.day.toString(10) === nr);
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -124,7 +123,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const [boardSize, setBoardSize] = useState(600);
 
-  const date = new Date(2020, 10, parseInt("13", 11), 2, 20, 0).getTime();
+  const date = new Date(2020, 11, parseInt("13", 10), 2, 20, 0).getTime();
   const currDate = new Date().getTime();
 
   const diff = currDate - date;
@@ -180,32 +179,56 @@ const Post = ({ nr, posts }: WindowProps) => {
   };
 
   const onSubmit = (formData: any) => {
-    if (success) {
-      setAlreadySubmitted(true);
-      setOpenInfo(true);
-      return;
+    if (user && user.uid) {
+      const alreadyPosted = reactLocalStorage.get(user.uid + nr);
+
+      if (alreadyPosted) {
+        setAlreadySubmitted(true);
+        setOpenInfo(true);
+        return;
+      }
+    } else {
+      const alreadyPosted = reactLocalStorage.get(formData.email + nr);
+
+      if (alreadyPosted) {
+        setAlreadySubmitted(true);
+        setOpenInfo(true);
+        return;
+      }
     }
 
     if (!loading) {
       setSubmitError(false);
-      setSuccess(false);
       setLoading(true);
 
       const data = new FormData();
 
-      data.set("Email", formData.email);
-      data.set("Name", formData.name);
+      if (user?.email && user?.displayName) {
+        data.set("Email", user.email);
+        data.set("Username", user.displayName);
+      } else {
+        data.set("Email", formData.email);
+        data.set("Name", formData.name);
+      }
+
       data.set("Day", nr);
       data.set("Answer", formData.answer);
 
-      fetch(url, {
+      const submitUrl = process.env.REACT_APP_SHEETS;
+
+      fetch(submitUrl, {
         method: "POST",
         body: data,
       })
         .then((response) => {
           if (response.ok) {
-            setSuccess(true);
             setOpenSuccess(true);
+
+            if (user && user.uid) {
+              reactLocalStorage.set(user.uid + nr, true);
+            } else {
+              reactLocalStorage.set(formData.email + nr, true);
+            }
           }
         })
         .catch((error) => {
@@ -235,32 +258,42 @@ const Post = ({ nr, posts }: WindowProps) => {
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Submit answer</h2>
-
+            {!user && (
+              <p>
+                Log in to appear on the Highscores, keep track of how many
+                points you have, and to avoid writing your name and email
+                everytime.
+              </p>
+            )}
             <div className="formElements">
-              <TextField
-                className="textfield"
-                inputRef={register({
-                  required: "Required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "invalid email address",
-                  },
-                })}
-                name="email"
-                label="Email"
-                variant="filled"
-                error={errors.email}
-                helperText={errors.email && "Invalid email"}
-              />
-              <TextField
-                className="textfield"
-                inputRef={register({ required: "Required" })}
-                name="name"
-                label="Name"
-                variant="filled"
-                error={errors.name}
-                helperText={errors.name && "This field is required"}
-              />
+              {!user && (
+                <>
+                  <TextField
+                    className="textfield"
+                    inputRef={register({
+                      required: "Required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "invalid email address",
+                      },
+                    })}
+                    name="email"
+                    label="Email"
+                    variant="filled"
+                    error={errors.email}
+                    helperText={errors.email && "Invalid email"}
+                  />
+                  <TextField
+                    className="textfield"
+                    inputRef={register({ required: "Required" })}
+                    name="name"
+                    label="Name"
+                    variant="filled"
+                    error={errors.name}
+                    helperText={errors.name && "This field is required"}
+                  />
+                </>
+              )}
 
               <TextField
                 className="textfield"
@@ -281,9 +314,9 @@ const Post = ({ nr, posts }: WindowProps) => {
               type="submit"
               variant="contained"
               color="primary"
-              className={`button-submit ${success ? "buttonSuccess" : ""} ${
-                submitError ? "buttonSubmitError" : ""
-              }`}
+              className={`button-submit ${
+                alreadySubmitted ? "buttonSuccess" : ""
+              } ${submitError ? "buttonSubmitError" : ""}`}
               disabled={loading}
             >
               Submit
@@ -291,7 +324,7 @@ const Post = ({ nr, posts }: WindowProps) => {
           </form>
 
           <div className="submitFeedback">
-            {success && !alreadySubmitted && (
+            {!alreadySubmitted && (
               <Collapse in={openSuccess}>
                 <Alert
                   action={
