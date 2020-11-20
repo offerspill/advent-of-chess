@@ -83,7 +83,7 @@ const StyledSignUp = styled.div`
     h3 {
       margin-right: 1rem;
     }
-    .notyou  {
+    .center {
       display: flex;
 
       flex-direction: row;
@@ -107,11 +107,9 @@ const SignUp = () => {
 
     const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
-    /*
     if (user != null) {
       user?.sendEmailVerification();
     }
-    */
 
     generateUserDocument(user, { displayName });
   };
@@ -176,19 +174,31 @@ const SignUp = () => {
         </>
       ) : (
         <div className="signedin">
-          <h2>You're signed in as {user.displayName}!</h2>
-          <div className="notyou">
-            <h3>Not you?</h3>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                auth.signOut();
-              }}
-            >
-              Sign out
-            </Button>
-          </div>
+          {user?.emailVerified ? (
+            <>
+              <h2>You're signed in as {user.displayName}!</h2>
+              <div className="center">
+                <h3>Not you?</h3>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    auth.signOut();
+                  }}
+                >
+                  Sign out
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2>Check your email to verify your user</h2>
+              <div className="center">No email? Check your spam folder.</div>
+              <div className="center">
+                Still no email? Contact adventofchess@offerspill.no.
+              </div>
+            </>
+          )}
         </div>
       )}
     </StyledSignUp>

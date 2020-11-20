@@ -115,7 +115,6 @@ const Post = ({ nr, posts }: WindowProps) => {
   const post = posts.find((post: any) => post.day.toString(10) === nr);
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -180,12 +179,6 @@ const Post = ({ nr, posts }: WindowProps) => {
   };
 
   const onSubmit = (formData: any) => {
-    if (success) {
-      setAlreadySubmitted(true);
-      setOpenInfo(true);
-      return;
-    }
-
     if (user && user.uid) {
       const alreadyPosted = reactLocalStorage.get(user.uid + nr);
 
@@ -193,8 +186,6 @@ const Post = ({ nr, posts }: WindowProps) => {
         setAlreadySubmitted(true);
         setOpenInfo(true);
         return;
-      } else {
-        reactLocalStorage.set(user.uid + nr, true);
       }
     } else {
       const alreadyPosted = reactLocalStorage.get(formData.email + nr);
@@ -203,14 +194,11 @@ const Post = ({ nr, posts }: WindowProps) => {
         setAlreadySubmitted(true);
         setOpenInfo(true);
         return;
-      } else {
-        reactLocalStorage.set(formData.email + nr, true);
       }
     }
 
     if (!loading) {
       setSubmitError(false);
-      setSuccess(false);
       setLoading(true);
 
       const data = new FormData();
@@ -234,8 +222,13 @@ const Post = ({ nr, posts }: WindowProps) => {
       })
         .then((response) => {
           if (response.ok) {
-            setSuccess(true);
             setOpenSuccess(true);
+
+            if (user && user.uid) {
+              reactLocalStorage.set(user.uid + nr, true);
+            } else {
+              reactLocalStorage.set(formData.email + nr, true);
+            }
           }
         })
         .catch((error) => {
@@ -321,9 +314,9 @@ const Post = ({ nr, posts }: WindowProps) => {
               type="submit"
               variant="contained"
               color="primary"
-              className={`button-submit ${success ? "buttonSuccess" : ""} ${
-                submitError ? "buttonSubmitError" : ""
-              }`}
+              className={`button-submit ${
+                alreadySubmitted ? "buttonSuccess" : ""
+              } ${submitError ? "buttonSubmitError" : ""}`}
               disabled={loading}
             >
               Submit
@@ -331,7 +324,7 @@ const Post = ({ nr, posts }: WindowProps) => {
           </form>
 
           <div className="submitFeedback">
-            {success && !alreadySubmitted && (
+            {!alreadySubmitted && (
               <Collapse in={openSuccess}>
                 <Alert
                   action={

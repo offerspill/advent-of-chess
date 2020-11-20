@@ -38,11 +38,11 @@ export const generateUserDocument = async (user, additionalData) => {
 
   const userRef = firestore.doc(`users/${user.uid}`);
   const snapshot = await userRef.get();
+
   if (!snapshot.exists) {
-    const { email, displayName, emailVerified } = user;
+    const { email, displayName } = user;
     try {
       await userRef.set({
-        emailVerified,
         displayName,
         email,
         ...additionalData,
@@ -51,16 +51,18 @@ export const generateUserDocument = async (user, additionalData) => {
       console.error("Error creating user document", error);
     }
   }
-  return getUserDocument(user.uid);
+
+  return getUserDocument(user.uid, user.emailVerified);
 };
 
-export const getUserDocument = async (uid) => {
+export const getUserDocument = async (uid, emailVerified) => {
   if (!uid) return null;
 
   try {
     const userDocument = await firestore.doc(`users/${uid}`).get();
 
     return {
+      emailVerified,
       uid,
       ...userDocument.data(),
     };
