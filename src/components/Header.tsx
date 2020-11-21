@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Alert from "@material-ui/lab/Alert";
+import { CloseSharp } from "@material-ui/icons";
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase/firebaseConfig";
 
@@ -69,6 +71,21 @@ const Header = () => {
           </div>
         </Toolbar>
       </AppBar>
+      {user && !user.emailVerified && (
+        <Alert
+          severity="info"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+            ></IconButton>
+          }
+        >
+          You need to verify your email ({user.email}) before submitting
+          answers.
+        </Alert>
+      )}
     </StyledAppBar>
   );
 };

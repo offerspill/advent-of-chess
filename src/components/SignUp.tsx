@@ -7,11 +7,16 @@ import {
 } from "../firebase/firebaseConfig";
 import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { UserContext } from "../providers/UserProvider";
 import styled from "styled-components";
+import Alert from "@material-ui/lab/Alert";
+import { CloseSharp } from "@material-ui/icons";
+import { SettingsRemoteOutlined } from "@material-ui/icons";
 
 const StyledSignUp = styled.div`
   margin-top: 6rem;
+  margin-bottom: 6rem;
   padding-left: 2rem;
   padding-right: 2rem;
 
@@ -90,28 +95,55 @@ const StyledSignUp = styled.div`
       justify-content: center;
     }
   }
+
+  .submitFeedback {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
 `;
 
 const SignUp = () => {
   const user = useContext(UserContext);
+  const [error, setError] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = async (formData: any) => {
+    setError("");
+    setLoading(true);
     const { displayName, email, password } = formData;
     const usernames = await getUniqueLowercaseUsernames();
 
     if (usernames.includes(displayName.toLowerCase())) {
       console.error("Username already taken");
+      setError("Username is already taken.");
+      setOpenError(true);
+      setLoading(false);
       return;
     }
 
-    const { user } = await auth.createUserWithEmailAndPassword(email, password);
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
 
-    if (user != null) {
-      user?.sendEmailVerification();
+      generateUserDocument(user, { displayName });
+
+      if (user != null) {
+        user?.sendEmailVerification();
+      }
+    } catch (err) {
+      setError(err.message);
+      setOpenError(true);
+      setLoading(false);
+      return;
     }
 
-    generateUserDocument(user, { displayName });
+    setLoading(false);
   };
 
   return (
@@ -159,10 +191,37 @@ const SignUp = () => {
                 helperText={errors.name && "This field is required"}
               />
             </div>
-            <Button type="submit" variant="contained" color="primary">
-              Register
-            </Button>
+            {loading ? (
+              <CircularProgress size={24} className="buttonProgress" />
+            ) : (
+              <Button type="submit" variant="contained" color="primary">
+                Register
+              </Button>
+            )}
           </form>
+          <div className="submitFeedback">
+            {error && (
+              <Collapse in={openError}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenError(false);
+                      }}
+                    >
+                      <CloseSharp fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  {error}
+                </Alert>
+              </Collapse>
+            )}
+          </div>
           <p className="noAccount">
             <div className="margin-top">
               <span>Already have an account?</span>

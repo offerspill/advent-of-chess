@@ -118,8 +118,8 @@ const Post = ({ nr, posts }: WindowProps) => {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   const [boardSize, setBoardSize] = useState(600);
 
@@ -179,11 +179,20 @@ const Post = ({ nr, posts }: WindowProps) => {
   };
 
   const onSubmit = (formData: any) => {
+    setInfo("");
+    setOpenInfo(false);
+
     if (user && user.uid) {
+      if (!user.emailVerified) {
+        setError("You haven't verified your email.");
+        setOpenError(true);
+        return;
+      }
+
       const alreadyPosted = reactLocalStorage.get(user.uid + nr);
 
       if (alreadyPosted) {
-        setAlreadySubmitted(true);
+        setInfo("You have already submitted an answer to this question.");
         setOpenInfo(true);
         return;
       }
@@ -191,14 +200,14 @@ const Post = ({ nr, posts }: WindowProps) => {
       const alreadyPosted = reactLocalStorage.get(formData.email + nr);
 
       if (alreadyPosted) {
-        setAlreadySubmitted(true);
+        setInfo("You have already submitted an answer to this question.");
         setOpenInfo(true);
         return;
       }
     }
 
     if (!loading) {
-      setSubmitError(false);
+      setError("");
       setLoading(true);
 
       const data = new FormData();
@@ -231,8 +240,8 @@ const Post = ({ nr, posts }: WindowProps) => {
             }
           }
         })
-        .catch((error) => {
-          setSubmitError(true);
+        .catch((err) => {
+          setError(err.message);
           setOpenError(true);
           console.error("Error:", error);
         })
@@ -258,13 +267,6 @@ const Post = ({ nr, posts }: WindowProps) => {
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Submit answer</h2>
-            {!user && (
-              <p>
-                Log in to appear on the Highscores, keep track of how many
-                points you have, and to avoid writing your name and email
-                everytime.
-              </p>
-            )}
             <div className="formElements">
               {!user && (
                 <>
@@ -314,9 +316,9 @@ const Post = ({ nr, posts }: WindowProps) => {
               type="submit"
               variant="contained"
               color="primary"
-              className={`button-submit ${
-                alreadySubmitted ? "buttonSuccess" : ""
-              } ${submitError ? "buttonSubmitError" : ""}`}
+              className={`button-submit ${info ? "buttonSuccess" : ""} ${
+                error ? "buttonSubmitError" : ""
+              }`}
               disabled={loading}
             >
               Submit
@@ -324,7 +326,7 @@ const Post = ({ nr, posts }: WindowProps) => {
           </form>
 
           <div className="submitFeedback">
-            {!alreadySubmitted && (
+            {!info && (
               <Collapse in={openSuccess}>
                 <Alert
                   action={
@@ -344,7 +346,7 @@ const Post = ({ nr, posts }: WindowProps) => {
                 </Alert>
               </Collapse>
             )}
-            {alreadySubmitted && (
+            {info && (
               <Collapse in={openInfo}>
                 <Alert
                   severity="info"
@@ -361,11 +363,11 @@ const Post = ({ nr, posts }: WindowProps) => {
                     </IconButton>
                   }
                 >
-                  You have already submitted an answer
+                  {info}
                 </Alert>
               </Collapse>
             )}
-            {submitError && (
+            {error && (
               <Collapse in={openError}>
                 <Alert
                   severity="error"
@@ -382,8 +384,7 @@ const Post = ({ nr, posts }: WindowProps) => {
                     </IconButton>
                   }
                 >
-                  Oops! Something went wrong. Please try again or contact us if
-                  the problem persists
+                  {error}
                 </Alert>
               </Collapse>
             )}

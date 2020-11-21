@@ -1,13 +1,17 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
 import styled from "styled-components";
+import Alert from "@material-ui/lab/Alert";
+import { CloseSharp } from "@material-ui/icons";
 import { auth } from "../firebase/firebaseConfig";
 import { UserContext } from "../providers/UserProvider";
 
 const StyledSignIn = styled.div`
   margin-top: 6rem;
+  margin-bottom: 6rem;
   padding-left: 2rem;
   padding-right: 2rem;
 
@@ -73,21 +77,50 @@ const StyledSignIn = styled.div`
     .margin-top {
       margin-top: 1rem;
     }
+
+    .buttonProgress {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
+
+  .submitFeedback {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 2rem;
   }
 `;
 
 const SignIn = () => {
   const user = useContext(UserContext);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = (formData: any) => {
+    setLoading(true);
+    setError("");
+    setOpenError(false);
+
     auth
       .signInWithEmailAndPassword(formData.email, formData.password)
       .catch((error) => {
-        setError("Error signing in with password and email!" as any);
-        console.error("Error signing in with password and email", error);
+        if (
+          error.code === "auth/user-not-found" ||
+          error.code === "auth/wrong-password"
+        ) {
+          setError("You have entered an invalid username or password.");
+        } else {
+          setError("Error signing in.");
+        }
+        setOpenError(true);
+        console.error("Error signing in", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -124,10 +157,37 @@ const SignIn = () => {
                 helperText={errors.name && "This field is required"}
               />
             </div>
-            <Button type="submit" variant="contained" color="primary">
-              Sign in
-            </Button>
+            {loading ? (
+              <CircularProgress size={24} className="buttonProgress" />
+            ) : (
+              <Button type="submit" variant="contained" color="primary">
+                Sign in
+              </Button>
+            )}
           </form>
+          <div className="submitFeedback">
+            {error && (
+              <Collapse in={openError}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenError(false);
+                      }}
+                    >
+                      <CloseSharp fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  {error}
+                </Alert>
+              </Collapse>
+            )}
+          </div>
           <p className="noAccount">
             <div className="margin-top">
               <span>Don't have an account?</span>
