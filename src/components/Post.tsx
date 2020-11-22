@@ -43,7 +43,6 @@ const StyledPost = styled.div`
     margin-bottom: 2rem;
 
     img {
-      border: 10px solid #0a3528;
       margin: 0 auto;
     }
   }
