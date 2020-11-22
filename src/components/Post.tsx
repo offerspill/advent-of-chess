@@ -44,6 +44,8 @@ const StyledPost = styled.div`
 
     img {
       margin: 0 auto;
+      width: 100%;
+      max-width: 600px;
     }
   }
 
@@ -141,7 +143,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const StyledChessGround = styled.div`
     margin: 0 auto;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     margin-bottom: 3rem;
     width: ${boardSize}px;
   `;
@@ -272,6 +274,7 @@ const Post = ({ nr, posts }: WindowProps) => {
                 <div className="formElements">
                   <TextField
                     className="textfield"
+                    multiline
                     inputRef={register({ required: "Required" })}
                     name="answer"
                     label="Answer"
