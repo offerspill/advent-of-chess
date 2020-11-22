@@ -14,6 +14,7 @@ import { CloseSharp } from "@material-ui/icons";
 import { validateFEN } from "../utils/chessUtils";
 import { UserContext } from "../providers/UserProvider";
 import { reactLocalStorage } from "reactjs-localstorage";
+import { Link } from "react-router-dom";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -267,62 +268,42 @@ const Post = ({ nr, posts }: WindowProps) => {
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Submit answer</h2>
-            <div className="formElements">
-              {!user && (
-                <>
-                  <TextField
-                    className="textfield"
-                    inputRef={register({
-                      required: "Required",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "invalid email address",
-                      },
-                    })}
-                    name="email"
-                    label="Email"
-                    variant="filled"
-                    error={errors.email}
-                    helperText={errors.email && "Invalid email"}
-                  />
+            {user ? (
+              <>
+                <div className="formElements">
                   <TextField
                     className="textfield"
                     inputRef={register({ required: "Required" })}
-                    name="name"
-                    label="Name"
+                    name="answer"
+                    label="Answer"
                     variant="filled"
-                    error={errors.name}
-                    helperText={errors.name && "This field is required"}
+                    error={errors.answer}
+                    helperText={errors.answer && "This field is required"}
                   />
-                </>
-              )}
+                </div>
 
-              <TextField
-                className="textfield"
-                inputRef={register({ required: "Required" })}
-                name="answer"
-                label="Answer"
-                variant="filled"
-                error={errors.answer}
-                helperText={errors.answer && "This field is required"}
-              />
-            </div>
+                {loading && (
+                  <CircularProgress size={24} className="buttonProgress" />
+                )}
 
-            {loading && (
-              <CircularProgress size={24} className="buttonProgress" />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={`button-submit ${info ? "buttonSuccess" : ""} ${
+                    error ? "buttonSubmitError" : ""
+                  }`}
+                  disabled={loading}
+                >
+                  Submit
+                </Button>
+              </>
+            ) : (
+              <h3>
+                You need to <Link to="/signin">sign in</Link> to submit an
+                answer.
+              </h3>
             )}
-
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={`button-submit ${info ? "buttonSuccess" : ""} ${
-                error ? "buttonSubmitError" : ""
-              }`}
-              disabled={loading}
-            >
-              Submit
-            </Button>
           </form>
 
           <div className="submitFeedback">
