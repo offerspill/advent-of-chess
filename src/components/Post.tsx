@@ -173,6 +173,7 @@ const Post = ({ nr, posts }: WindowProps) => {
               height={`${boardSize}px`}
               fen={props.node.fen}
               viewOnly={true}
+              coordinates={!props.node.coordinates}
             />
           </StyledChessGround>
         );
@@ -271,10 +272,16 @@ const Post = ({ nr, posts }: WindowProps) => {
             <h2>Submit answer</h2>
             {user ? (
               <>
+                {" "}
+                <p>
+                  You won't be able to change your answer once you've submitted
+                  it.
+                </p>
                 <div className="formElements">
                   <TextField
                     className="textfield"
                     multiline
+                    rows={4}
                     inputRef={register({ required: "Required" })}
                     name="answer"
                     label="Answer"
@@ -283,11 +290,9 @@ const Post = ({ nr, posts }: WindowProps) => {
                     helperText={errors.answer && "This field is required"}
                   />
                 </div>
-
                 {loading && (
                   <CircularProgress size={24} className="buttonProgress" />
                 )}
-
                 <Button
                   type="submit"
                   variant="contained"
