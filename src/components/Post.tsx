@@ -5,16 +5,19 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Accordion from "@material-ui/core/Accordion";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Alert from "@material-ui/lab/Alert";
 import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import { CloseSharp } from "@material-ui/icons";
+import Tooltip from "@material-ui/core/Tooltip";
 import { validateFEN } from "../utils/chessUtils";
 import { UserContext } from "../providers/UserProvider";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { Link } from "react-router-dom";
+import broken from "../assets/broken.png";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -35,6 +38,19 @@ const StyledPost = styled.div`
     margin: 0 auto;
     line-height: 1.5;
     font-weight: 300;
+
+    .icons {
+      margin-bottom: 3rem;
+
+      img {
+        margin-right: 2rem;
+        transition: all 0.1s ease-in-out;
+      }
+
+      img:hover {
+        transform: scale(1.1);
+      }
+    }
   }
 
   figure {
@@ -104,6 +120,15 @@ const StyledClosedSubmissions = styled.div`
   margin-top: 4rem;
   text-align: center;
 `;
+
+const tooltipStyles = makeStyles((theme) => ({
+  arrow: {
+    color: "#000",
+  },
+  tooltip: {
+    backgroundColor: "#000",
+  },
+}));
 
 interface WindowProps {
   nr: string;
@@ -258,6 +283,13 @@ const Post = ({ nr, posts }: WindowProps) => {
     <StyledPost>
       <h1 className="day">{post.day}</h1>
       <div className="body">
+        <div className="icons">
+          <Tooltip arrow title="Selfmate" classes={tooltipStyles()}>
+            <img src={broken} width="64px" />
+          </Tooltip>
+          <img src={broken} width="64px" />
+          <img src={broken} width="64px" />
+        </div>
         <BlockContent
           blocks={post.body}
           imageOptions={{ w: 550 }}
