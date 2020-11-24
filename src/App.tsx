@@ -12,6 +12,7 @@ import SignUp from "./components/SignUp";
 import UserProvider from "./providers/UserProvider";
 import ProfilePage from "./components/ProfilePage";
 import PasswordReset from "./components/PasswordReset";
+import Footer from "./components/Footer";
 
 const StyledApp = styled.div`
   background-color: white;
@@ -72,6 +73,7 @@ function App() {
             </Route>
           </Switch>
         </StyledApp>
+        <Footer />
       </UserProvider>
     </Router>
   );
