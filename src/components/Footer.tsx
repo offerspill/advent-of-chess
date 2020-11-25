@@ -6,24 +6,16 @@ import sanityLogo from "../assets/sanity-logo.png";
 
 const StyledFooter = styled.footer`
   margin: 0 auto;
-  background-color: #0a3528;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  background-color: #f2f2f2;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 
   p {
     text-align: center;
     margin-top: 1rem;
     padding-right: 2rem;
     padding-left: 2rem;
-    color: white;
-  }
-
-  hr {
-    border: none;
-    height: 2px;
-    /* Set the hr color */
-    color: #0a3528; /* old IE */
-    background-color: #0a3528; /* Modern Browsers */
+    color: black;
   }
 `;
 
@@ -40,6 +32,8 @@ const StyledFooterIcons = styled.div`
     height: 32px;
     padding: 1rem;
 
+    transition: all 0.1s ease-in-out;
+
     img {
       height: 32px;
     }
@@ -49,24 +43,27 @@ const StyledFooterIcons = styled.div`
       margin-top: 4px;
     }
   }
+
+  .icon:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const Footer = () => {
   return (
     <StyledFooter>
-      <p>Footer blablbla</p>
-      {/*<StyledFooterIcons>
+      <StyledFooterIcons>
         <div className="icon">
-          <a href="https://offerspill.com/" target="_blank">
+          <a href="https://offerspill.com/" target="_blank" rel="noopener">
             <img src={offerspillLogo} />
           </a>
         </div>
         <div className="icon">
-          <a href="https://sanity.io" target="_blank">
+          <a href="https://sanity.io" target="_blank" rel="noopener">
             <img className="sanityLogo" src={sanityLogo} />
           </a>
         </div>
-      </StyledFooterIcons>*/}
+      </StyledFooterIcons>
     </StyledFooter>
   );
 };

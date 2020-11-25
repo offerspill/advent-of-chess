@@ -1,76 +1,173 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfig";
+import {
+  auth,
+  generateUserDocument,
+  getUniqueLowercaseUsernames,
+} from "../firebase/firebaseConfig";
+import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { UserContext } from "../providers/UserProvider";
+import styled from "styled-components";
+import Alert from "@material-ui/lab/Alert";
+import { CloseSharp } from "@material-ui/icons";
+import { SettingsRemoteOutlined } from "@material-ui/icons";
+
+const StyledPasswordReset = styled.div`
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  .signedIn {
+    margin-top: 2rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+  }
+
+  .checkEmail {
+    text-align: center;
+  }
+
+  form {
+    margin: 0 auto;
+    margin-top: 5rem;
+    max-width: 600px;
+
+    .formElements {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      .textfield {
+        margin-bottom: 2rem;
+      }
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .buttonSuccess {
+      background-color: #4baf51;
+    }
+
+    .buttonSubmitError {
+      background-color: #ff7561;
+    }
+
+    .buttonProgress {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
+`;
 
 const PasswordReset = () => {
-  const [email, setEmail] = useState("");
-  const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
-  const [error, setError] = useState(null);
-  const onChangeHandler = (event: any) => {
-    const { name, value } = event.currentTarget;
-    if (name === "userEmail") {
-      setEmail(value);
-    }
+  const [error, setError] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+
+  const { handleSubmit, register, errors } = useForm();
+
+  const onSubmit = async (formData: any) => {
+    setLoading(true);
+
+    setError("");
+
+    const { email } = formData;
+
+    await auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setEmailSent(true);
+      })
+      .catch(() => {
+        setError("Error resetting password");
+      })
+      .finally(() => {
+        setLoading(false);
+
+        if (!error) {
+          setEmailSent(true);
+        }
+      });
   };
+
+  return (
+    <StyledPasswordReset>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h2>Reset password</h2>
+        <div className="formElements">
+          <TextField
+            className="textfield"
+            inputRef={register({
+              required: "Required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "invalid email address",
+              },
+            })}
+            name="email"
+            label="Email"
+            variant="filled"
+            error={errors.email}
+            helperText={errors.email && "Invalid email"}
+          />
+        </div>
+        {loading ? (
+          <CircularProgress size={24} className="buttonProgress" />
+        ) : emailSent ? (
+          <p className="checkEmail">Check your email!</p>
+        ) : (
+          <Button type="submit" variant="contained" color="primary">
+            Reset password
+          </Button>
+        )}
+      </form>{" "}
+      <div className="submitFeedback">
+        {error && (
+          <Collapse in={openError}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpenError(false);
+                  }}
+                >
+                  <CloseSharp fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {error}
+            </Alert>
+          </Collapse>
+        )}
+      </div>
+    </StyledPasswordReset>
+  );
+};
+
+export default PasswordReset;
+
+/*
 
   const sendResetEmail = (event: any) => {
     event.preventDefault();
-    auth
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        setEmailHasBeenSent(true);
-        setTimeout(() => {
-          setEmailHasBeenSent(false);
-        }, 3000);
-      })
-      .catch(() => {
-        setError("Error resetting password" as any);
-      });
-  };
-  return (
-    <div className="mt-8">
-      <h1 className="text-xl text-center font-bold mb-3">
-        Reset your Password
-      </h1>
-      <div className="border border-blue-300 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
-        <form action="">
-          {emailHasBeenSent && (
-            <div className="py-3 bg-green-400 w-full text-white text-center mb-3">
-              An email has been sent to you!
-            </div>
-          )}
-          {error !== null && (
-            <div className="py-3 bg-red-600 w-full text-white text-center mb-3">
-              {error}
-            </div>
-          )}
-          <label htmlFor="userEmail" className="w-full block">
-            Email:
-          </label>
-          <input
-            type="email"
-            name="userEmail"
-            id="userEmail"
-            value={email}
-            placeholder="Input your email"
-            onChange={onChangeHandler}
-            className="mb-3 w-full px-1 py-2"
-          />
-          <button
-            onClick={sendResetEmail}
-            className="w-full bg-blue-400 text-white py-3"
-          >
-            Send me a reset link
-          </button>
-        </form>
-        <Link
-          to="/"
-          className="my-2 text-blue-700 hover:text-blue-800 text-center block"
-        >
-          &larr; back to sign in page
-        </Link>
-      </div>
-    </div>
-  );
-};
-export default PasswordReset;
+    auth.sendPasswordResetEmail(email).catch(() => {
+      setError("Error resetting password" as any);
+    });
+  };*/
