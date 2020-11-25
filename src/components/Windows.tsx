@@ -113,7 +113,7 @@ const Windows = ({ posts }: WindowsProps) => {
   return (
     <StyledWindows>
       {windows.map((window: any, i: number) => {
-        const post = posts[i];
+        const post = posts.find((post: any) => post.day === i + 1);
 
         if (post) {
           return (

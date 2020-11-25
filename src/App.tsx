@@ -73,7 +73,7 @@ function App() {
             </Route>
           </Switch>
         </StyledApp>
-        <Footer />
+        {/*<Footer />*/}
       </UserProvider>
     </Router>
   );
