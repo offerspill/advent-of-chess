@@ -12,6 +12,8 @@ import SignUp from "./components/SignUp";
 import UserProvider from "./providers/UserProvider";
 import ProfilePage from "./components/ProfilePage";
 import PasswordReset from "./components/PasswordReset";
+import Leaderboard from "./components/Leaderboard";
+import About from "./components/About";
 import Footer from "./components/Footer";
 
 const StyledApp = styled.div`
@@ -59,6 +61,12 @@ function App() {
                 <Post nr={props.match.params.nr} posts={posts} />
               )}
             />
+            <Route exact path="/leaderboard">
+              <Leaderboard />
+            </Route>
+            <Route exact path="/about">
+              <About />
+            </Route>
             <Route exact path="/signin">
               <SignIn />
             </Route>
