@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Windows from "./Windows";
 import Fade from "react-reveal/Fade";
+import Countdown from "react-countdown";
 
 const StyledFrontpage = styled.div`
   padding-top: 40px;
@@ -33,6 +34,30 @@ interface FrontpageProps {
   posts: any;
 }
 
+interface Countdown {
+  hours: number;
+  minutes: number;
+  seconds: number;
+  completed: boolean;
+}
+
+const countdownRenderer = ({
+  hours,
+  minutes,
+  seconds,
+  completed,
+}: Countdown) => {
+  if (completed) {
+    return null;
+  } else {
+    return (
+      <span>
+        {hours}:{minutes}:{seconds}
+      </span>
+    );
+  }
+};
+
 const Frontpage = ({ posts }: FrontpageProps) => {
   const compare = (a: any, b: any) => {
     let aint = parseInt(a.day, 10);
@@ -53,9 +78,19 @@ const Frontpage = ({ posts }: FrontpageProps) => {
     <StyledFrontpage>
       <Info>
         <Fade top cascade>
-          <h1>Solve chess puzzles every day in December.</h1>
-          <h1>Win a chess board signed by World Champion Magnus Carlsen.</h1>
+          <div>
+            <h1>Solve chess puzzles every day in December.</h1>
+            <h1>Win a chess board signed by World Champion Magnus Carlsen.</h1>
+            <h1>
+              The first puzzle will unlock on December 1st at midnight UTC.
+            </h1>
+          </div>
         </Fade>
+        {/*<Fade>
+          <h2>
+            <Countdown date={Date.now() + 10000} renderer={countdownRenderer} />
+          </h2>
+        </Fade>*/}
       </Info>
       <Windows posts={posts} />
     </StyledFrontpage>

@@ -8,8 +8,11 @@ import { FaTwitter, FaFacebook } from "react-icons/fa";
 const StyledFooter = styled.footer`
   margin: 0 auto;
   background-color: #f2f2f2;
+  padding-right: 1rem;
+  padding-left: 1rem;
 
   height: 100px;
+
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -21,6 +24,11 @@ const StyledFooter = styled.footer`
     padding-left: 2rem;
     color: black;
   }
+
+  @media screen and (max-width: 768px) {
+    height: 290px;
+    text-align: center;
+  }
 `;
 
 const StyledFooterIcons = styled.div`
@@ -28,6 +36,10 @@ const StyledFooterIcons = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-top: 1rem;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 
   .sanityLogo {
     margin-bottom: 1px;

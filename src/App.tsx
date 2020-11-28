@@ -25,6 +25,10 @@ const Body = styled.div`
   background-color: white;
   padding-bottom: 200px;
   position: relative;
+
+  @media screen and (max-width: 768px) {
+    padding-bottom: 290px;
+  }
 `;
 
 function App() {

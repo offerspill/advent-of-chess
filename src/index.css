@@ -27,3 +27,7 @@ code {
 .MuiAppBar-colorPrimary {
   background-color: #3ab99b !important;
 }
+
+cg-board {
+  cursor: default !important;
+}
