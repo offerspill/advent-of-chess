@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import offerspillLogo from "../assets/offerspill-logo.png";
 import sanityLogo from "../assets/sanity-logo.png";
+import { FaTwitter, FaFacebook } from "react-icons/fa";
 
 const StyledFooter = styled.footer`
   margin: 0 auto;
@@ -46,6 +47,10 @@ const StyledFooterIcons = styled.div`
       height: 27px;
       margin-top: 4px;
     }
+
+    a {
+      color: black;
+    }
   }
 
   .icon:hover {
@@ -60,6 +65,24 @@ const Footer = () => {
         <div className="icon">
           <a href="https://offerspill.com/" target="_blank" rel="noopener">
             <img src={offerspillLogo} />
+          </a>
+        </div>
+        <div className="icon">
+          <a
+            href="https://twitter.com/offerspill"
+            target="_blank"
+            rel="noopener"
+          >
+            <FaTwitter size={32} />
+          </a>
+        </div>
+        <div className="icon">
+          <a
+            href="https://facebook.com/offerspillsk"
+            target="_blank"
+            rel="noopener"
+          >
+            <FaFacebook size={32} />
           </a>
         </div>
         <div className="icon">
