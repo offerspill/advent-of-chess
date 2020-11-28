@@ -29,7 +29,7 @@ const StyledAbout = styled.div`
   max-width: 680px;
 
   @media (max-width: 800px) {
-    width: 360px;
+    max-width: 360px;
   }
 `;
 
