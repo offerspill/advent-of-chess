@@ -40,7 +40,7 @@ function App() {
     setIsOpen(!isOpen);
   };
 
-  const day = 19;
+  const day = 24;
 
   const query = `*[_type == $type  && day <= ${day.toString(
     10
