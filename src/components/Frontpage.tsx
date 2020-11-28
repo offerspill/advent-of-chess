@@ -82,7 +82,7 @@ const Frontpage = ({ posts }: FrontpageProps) => {
             <h1>Solve chess puzzles every day in December.</h1>
             <h1>Win a chess board signed by World Champion Magnus Carlsen.</h1>
             <h1>
-              The first puzzle will unlock on December 1st at midnight UTC.
+              The first puzzle will unlock on December 1st at midnight (UTC).
             </h1>
           </div>
         </Fade>

@@ -9,8 +9,10 @@ import {
   NavMenu,
   NavLink,
   NavBtn,
-  NavBtnLink,
+  SignInBtn,
   SignedInText,
+  LogOutBtn,
+  LogOutWrapper,
 } from "./NavbarElements";
 import logo from "../../assets/logo.png";
 
@@ -34,10 +36,21 @@ const Navbar = ({ toggle }: Props) => {
         </NavMenu>
         {!user ? (
           <NavBtn>
-            <NavBtnLink to="/signin">Sign in</NavBtnLink>
+            <SignInBtn to="/signin">Sign in</SignInBtn>
           </NavBtn>
         ) : (
-          <SignedInText>Signed in as {user.displayName}</SignedInText>
+          <>
+            <LogOutWrapper>
+              <SignedInText>Signed in as {user.displayName}</SignedInText>
+              <LogOutBtn
+                onClick={() => {
+                  auth.signOut();
+                }}
+              >
+                Log out
+              </LogOutBtn>
+            </LogOutWrapper>
+          </>
         )}
       </Nav>
     </>

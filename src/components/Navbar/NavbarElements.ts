@@ -44,7 +44,7 @@ export const Bars = styled(FaBars)`
   @media screen and (max-width: 768px) {
     display: block;
     position: absolute;
-    top: 0;
+    top: 25px;
     right: 0;
     transform: translate(-100%, 75%);
     font-size: 1.8rem;
@@ -78,7 +78,42 @@ export const NavBtn = styled.nav`
   }
 `;
 
-export const NavBtnLink = styled(Link)`
+export const LogOutWrapper = styled.nav`
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+
+  justify-content: flex-end;
+  width: 100vw;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const LogOutBtn = styled.div`
+  border-radius: 4px;
+  background: #000;
+  margin-left: 2rem;
+
+  padding: 10px 22px;
+
+  color: #fff;
+
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #010606;
+  }
+`;
+
+export const SignInBtn = styled(Link)`
   border-radius: 4px;
   background: #256ce1;
 
@@ -102,5 +137,4 @@ export const NavBtnLink = styled(Link)`
 export const SignedInText = styled.span`
   color: black;
   white-space: nowrap;
-  margin-top: 3.5rem;
 `;
