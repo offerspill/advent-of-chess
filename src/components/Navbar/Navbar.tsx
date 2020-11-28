@@ -1,8 +1,8 @@
 import React, { useContext, CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { UserContext } from "../providers/UserProvider";
-import { auth } from "../firebase/firebaseConfig";
+import { UserContext } from "../../providers/UserProvider";
+import { auth } from "../../firebase/firebaseConfig";
 import {
   Nav,
   Bars,
@@ -12,7 +12,11 @@ import {
   NavBtnLink,
 } from "./NavbarElements";
 
-const Navbar = () => {
+interface Props {
+  toggle: () => void;
+}
+
+const Navbar = ({ toggle }: Props) => {
   const user = useContext(UserContext);
 
   return (
@@ -21,12 +25,10 @@ const Navbar = () => {
         <NavLink to="/">
           <h1>Logo</h1>
         </NavLink>
-        <Bars />
+        <Bars onClick={toggle} />
         <NavMenu>
           <NavLink to="/about">About</NavLink>
-          <NavLink to="/services">Services</NavLink>
-          <NavLink to="/contact">Contact us</NavLink>
-          <NavLink to="/signup">Sign up</NavLink>
+          <NavLink to="/leaderboard">Leaderboard</NavLink>
         </NavMenu>
         <NavBtn>
           <NavBtnLink to="/signin">Sign in</NavBtnLink>

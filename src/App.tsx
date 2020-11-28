@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Frontpage from "./components/Frontpage";
 import { client } from "./sanity";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -15,6 +15,7 @@ import PasswordReset from "./components/PasswordReset";
 import Leaderboard from "./components/Leaderboard";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import Sidebar from "./components/Navbar/Sidebar";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -33,6 +34,11 @@ const Body = styled.div`
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   const day = 19;
 
@@ -59,7 +65,8 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <UserProvider>
         <Container>
-          <Navbar />
+          <Sidebar isOpen={isOpen} toggle={toggle} />
+          <Navbar toggle={toggle} />
           <Body>
             <Logo />
             <ScrollToTop />
