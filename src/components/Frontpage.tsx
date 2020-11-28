@@ -19,7 +19,7 @@ const StyledFrontpage = styled.div`
   }
 
   @media (max-width: 800px) {
-    width: 360px;
+    max-width: 360px;
   }
 
   margin: 0 auto;
@@ -28,6 +28,11 @@ const StyledFrontpage = styled.div`
 const Info = styled.div`
   margin-top: 3rem;
   margin-bottom: 3rem;
+
+  @media (max-width: 480px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 `;
 
 const AlreadyLoggedInText = styled.span`
@@ -84,7 +89,7 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
       <Info>
         <Fade top cascade>
           <div>
-            <h1>Solve chess puzzles every day in December.</h1>
+            <h1>Solve chess puzzles every day until Christmas.</h1>
             <h1>Win a chess board signed by World Champion Magnus Carlsen.</h1>
             <h1>
               The first puzzle will unlock on December 1st at midnight (UTC).

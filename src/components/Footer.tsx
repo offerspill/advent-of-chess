@@ -8,8 +8,6 @@ import { FaTwitter, FaFacebook } from "react-icons/fa";
 const StyledFooter = styled.footer`
   margin: 0 auto;
   background-color: #f2f2f2;
-  padding-right: 1rem;
-  padding-left: 1rem;
 
   height: 100px;
 

@@ -18,10 +18,6 @@ export const Nav = styled.nav`
   @media (max-width: 1390px) {
     max-width: 1000px;
   }
-
-  @media screen and (max-width: 1075px) {
-    padding-left: 3rem;
-  }
 `;
 
 export const NavLink = styled(Link)`
