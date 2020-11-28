@@ -12,7 +12,7 @@ import {
   NavBtnLink,
 } from "./NavbarElements";
 
-const Header = () => {
+const Navbar = () => {
   const user = useContext(UserContext);
 
   return (
@@ -36,4 +36,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import Frontpage from "./components/Frontpage";
 import { client } from "./sanity";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -59,7 +59,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <UserProvider>
         <Container>
-          <Header />
+          <Navbar />
           <Body>
             <Logo />
             <ScrollToTop />
