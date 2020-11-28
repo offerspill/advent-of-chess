@@ -1,12 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import Windows from "./Windows";
-import Logo from "./Logo";
-import logo from "../assets/logo.png";
+import Fade from "react-reveal/Fade";
 
 const StyledFrontpage = styled.div`
   padding-top: 40px;
   padding-bottom: 40px;
+
+  max-width: 1320px;
+
+  @media (max-width: 1390px) {
+    max-width: 1000px;
+  }
+
+  @media (max-width: 1075px) {
+    max-width: 680px;
+  }
+
+  @media (max-width: 800px) {
+    width: 360px;
+  }
+
+  margin: 0 auto;
+`;
+
+const Info = styled.div`
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 `;
 
 interface FrontpageProps {
@@ -31,6 +51,12 @@ const Frontpage = ({ posts }: FrontpageProps) => {
 
   return (
     <StyledFrontpage>
+      <Info>
+        <Fade top cascade>
+          <h1>Solve chess puzzles every day in December.</h1>
+          <h1>Win a chess board signed by World Champion Magnus Carlsen.</h1>
+        </Fade>
+      </Info>
       <Windows posts={posts} />
     </StyledFrontpage>
   );

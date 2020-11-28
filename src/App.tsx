@@ -16,21 +16,21 @@ import Leaderboard from "./components/Leaderboard";
 import About from "./components/About";
 import Footer from "./components/Footer";
 
-const StyledApp = styled.div`
-  background-color: white;
-  padding-bottom: 100px;
+const Container = styled.div`
+  min-height: 100vh;
   position: relative;
 `;
 
-const Container = styled.div`
-  min-height: 100vh;
+const Body = styled.div`
+  background-color: white;
+  padding-bottom: 200px;
   position: relative;
 `;
 
 function App() {
   const [posts, setPosts] = useState([]);
 
-  const day = 24;
+  const day = 19;
 
   const query = `*[_type == $type  && day <= ${day.toString(
     10
@@ -56,7 +56,7 @@ function App() {
       <UserProvider>
         <Container>
           <Header />
-          <StyledApp>
+          <Body>
             <Logo />
             <ScrollToTop />
             <Switch>
@@ -88,7 +88,7 @@ function App() {
                 <PasswordReset />
               </Route>
             </Switch>
-          </StyledApp>
+          </Body>
           <Footer />
         </Container>
       </UserProvider>
