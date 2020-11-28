@@ -70,9 +70,11 @@ function App() {
           <Body>
             <ScrollToTop />
             <Switch>
-              <Route exact path="/">
-                <Frontpage posts={posts} />
-              </Route>
+              <Route
+                exact
+                path="/"
+                render={(props) => <Frontpage posts={posts} {...props} />}
+              />
               <Route
                 path="/day/:nr"
                 component={(props: any) => (

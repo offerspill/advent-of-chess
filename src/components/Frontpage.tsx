@@ -30,6 +30,11 @@ const Info = styled.div`
   margin-bottom: 3rem;
 `;
 
+const AlreadyLoggedInText = styled.span`
+  text-align: center;
+  width: 100vw;
+`;
+
 interface FrontpageProps {
   posts: any;
 }
@@ -58,7 +63,7 @@ const countdownRenderer = ({
   }
 };
 
-const Frontpage = ({ posts }: FrontpageProps) => {
+const Frontpage = ({ posts, ...props }: FrontpageProps) => {
   const compare = (a: any, b: any) => {
     let aint = parseInt(a.day, 10);
     let bint = parseInt(b.day, 10);

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
@@ -203,7 +203,12 @@ const SignIn = () => {
           </p>
         </>
       ) : (
-        <h2 className="signedIn">You're signed in!</h2>
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { loggedIn: true },
+          }}
+        />
       )}
     </StyledSignIn>
   );

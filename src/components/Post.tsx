@@ -24,6 +24,9 @@ const StyledPost = styled.div`
   padding-left: 2rem;
   padding-right: 2rem;
 
+  font-weight: 300;
+  font-size: 18px;
+
   h1.day {
     font-size: 60px;
     text-align: center;

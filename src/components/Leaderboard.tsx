@@ -30,7 +30,7 @@ const StyledLeaderboard = styled.div`
 `;
 
 const StyledTableContainer = styled(TableContainer)`
-  max-width: 650px;
+  max-width: 680px;
   margin: 0 auto;
 
   background-color: #3ab99b;
@@ -49,7 +49,7 @@ const StyledTableHead = styled(TableHead)`
 
 const Info = styled.p`
   margin: 0 auto;
-  max-width: 650px;
+  max-width: 680px;
   margin-bottom: 1rem;
 `;
 
