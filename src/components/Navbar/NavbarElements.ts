@@ -3,19 +3,25 @@ import { NavLink as Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 
 export const Nav = styled.nav`
-  background: #000;
-  height: 80px;
+  background: #fff;
+  height: 120px;
   display: flex;
-  /* justify-content: space-between;*/
+  justify-content: space-between;
+  margin: 0 auto;
 
-  padding: 0.5rem calc((100vw - 1000px) / 2);
   z-index: 10;
 
   justify-content: flex-start;
+
+  max-width: 1320px;
+
+  @media (max-width: 1390px) {
+    max-width: 1000px;
+  }
 `;
 
 export const NavLink = styled(Link)`
-  color: #fff;
+  color: #000;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -27,13 +33,13 @@ export const NavLink = styled(Link)`
   cursor: pointer;
 
   &.active {
-    color: #15cfdf;
+    color: #3ab99b;
   }
 `;
 
 export const Bars = styled(FaBars)`
   display: none;
-  color: #fff;
+  color: #000;
 
   @media screen and (max-width: 768px) {
     display: block;
@@ -91,4 +97,10 @@ export const NavBtnLink = styled(Link)`
     background: #fff;
     color: #010606;
   }
+`;
+
+export const SignedInText = styled.span`
+  color: black;
+  white-space: nowrap;
+  margin-top: 3.5rem;
 `;

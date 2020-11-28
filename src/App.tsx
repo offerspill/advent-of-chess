@@ -68,7 +68,6 @@ function App() {
           <Sidebar isOpen={isOpen} toggle={toggle} />
           <Navbar toggle={toggle} />
           <Body>
-            <Logo />
             <ScrollToTop />
             <Switch>
               <Route exact path="/">

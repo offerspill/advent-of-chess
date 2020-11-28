@@ -10,7 +10,9 @@ import {
   NavLink,
   NavBtn,
   NavBtnLink,
+  SignedInText,
 } from "./NavbarElements";
+import logo from "../../assets/logo.png";
 
 interface Props {
   toggle: () => void;
@@ -23,16 +25,20 @@ const Navbar = ({ toggle }: Props) => {
     <>
       <Nav>
         <NavLink to="/">
-          <h1>Logo</h1>
+          <img src={logo} width={100} />
         </NavLink>
         <Bars onClick={toggle} />
         <NavMenu>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/leaderboard">Leaderboard</NavLink>
         </NavMenu>
-        <NavBtn>
-          <NavBtnLink to="/signin">Sign in</NavBtnLink>
-        </NavBtn>
+        {!user ? (
+          <NavBtn>
+            <NavBtnLink to="/signin">Sign in</NavBtnLink>
+          </NavBtn>
+        ) : (
+          <SignedInText>Signed in as {user.displayName}</SignedInText>
+        )}
       </Nav>
     </>
   );

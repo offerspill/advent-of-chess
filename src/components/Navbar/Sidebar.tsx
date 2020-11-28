@@ -26,14 +26,8 @@ const Sidebar = ({ isOpen, toggle }: Props) => {
           <SidebarLink to="/about" onClick={toggle}>
             About
           </SidebarLink>
-          <SidebarLink to="about" onClick={toggle}>
-            Discover
-          </SidebarLink>
-          <SidebarLink to="about" onClick={toggle}>
-            Services
-          </SidebarLink>
-          <SidebarLink to="signup" onClick={toggle}>
-            Sign up
+          <SidebarLink to="/leaderboard" onClick={toggle}>
+            Leaderboard
           </SidebarLink>
         </SidebarMenu>
         <SideBtnWrap>
