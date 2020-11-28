@@ -7,8 +7,11 @@ import sanityLogo from "../assets/sanity-logo.png";
 const StyledFooter = styled.footer`
   margin: 0 auto;
   background-color: #f2f2f2;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 
   p {
     text-align: center;
@@ -23,6 +26,7 @@ const StyledFooterIcons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 1rem;
 
   .sanityLogo {
     margin-bottom: 1px;

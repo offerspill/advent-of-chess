@@ -18,6 +18,13 @@ import Footer from "./components/Footer";
 
 const StyledApp = styled.div`
   background-color: white;
+  padding-bottom: 100px;
+  position: relative;
+`;
+
+const Container = styled.div`
+  min-height: 100vh;
+  position: relative;
 `;
 
 function App() {
@@ -47,41 +54,43 @@ function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <UserProvider>
-        <Header />
-        <StyledApp>
-          <Logo />
-          <ScrollToTop />
-          <Switch>
-            <Route exact path="/">
-              <Frontpage posts={posts} />
-            </Route>
-            <Route
-              path="/day/:nr"
-              component={(props: any) => (
-                <Post nr={props.match.params.nr} posts={posts} />
-              )}
-            />
-            <Route exact path="/leaderboard">
-              <Leaderboard />
-            </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-            <Route exact path="/signin">
-              <SignIn />
-            </Route>
-            <Route exact path="/register">
-              <SignUp />
-            </Route>
-            <Route exact path="/profile">
-              <ProfilePage />
-            </Route>
-            <Route exact path="/reset">
-              <PasswordReset />
-            </Route>
-          </Switch>
-        </StyledApp>
-        {/*<Footer />*/}
+        <Container>
+          <Header />
+          <StyledApp>
+            <Logo />
+            <ScrollToTop />
+            <Switch>
+              <Route exact path="/">
+                <Frontpage posts={posts} />
+              </Route>
+              <Route
+                path="/day/:nr"
+                component={(props: any) => (
+                  <Post nr={props.match.params.nr} posts={posts} />
+                )}
+              />
+              <Route exact path="/leaderboard">
+                <Leaderboard />
+              </Route>
+              <Route exact path="/about">
+                <About />
+              </Route>
+              <Route exact path="/signin">
+                <SignIn />
+              </Route>
+              <Route exact path="/register">
+                <SignUp />
+              </Route>
+              <Route exact path="/profile">
+                <ProfilePage />
+              </Route>
+              <Route exact path="/reset">
+                <PasswordReset />
+              </Route>
+            </Switch>
+          </StyledApp>
+          <Footer />
+        </Container>
       </UserProvider>
     </Router>
   );

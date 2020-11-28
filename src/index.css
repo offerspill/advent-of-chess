@@ -1,9 +1,16 @@
 body {
-  margin: 0;
   font-family: "Merriweather Sans", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
   min-height: 100vh;
+  position: relative;
 }
 
 code {
