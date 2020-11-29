@@ -101,7 +101,9 @@ const Post = ({ nr, posts }: WindowProps) => {
 
     if (user && user.uid) {
       if (!user.emailVerified) {
-        setError("You haven't verified your email.");
+        setError(
+          "You haven't verified your email. If you just did, refresh and try again."
+        );
         setOpenError(true);
         return;
       }

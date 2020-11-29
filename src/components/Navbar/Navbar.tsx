@@ -2,6 +2,8 @@ import React, { useContext, CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../../providers/UserProvider";
+import IconButton from "@material-ui/core/IconButton";
+import Alert from "@material-ui/lab/Alert";
 import { auth } from "../../firebase/firebaseConfig";
 import {
   Nav,
@@ -53,6 +55,21 @@ const Navbar = ({ toggle }: Props) => {
           </>
         )}
       </Nav>
+      {user && !user.emailVerified && (
+        <Alert
+          severity="info"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+            ></IconButton>
+          }
+        >
+          You need to verify your email ({user.email}) before submitting
+          answers.
+        </Alert>
+      )}
     </>
   );
 };
