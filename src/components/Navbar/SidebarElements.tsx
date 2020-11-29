@@ -22,8 +22,19 @@ export const SidebarContainer = styled.aside`
   }
 `;
 
+export const SignedInText = styled.div`
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 2rem;
+`;
+
 export const CloseIcon = styled(FaTimes)`
   color: #fff;
+  display: block;
+  position: absolute;
+  top: 25px;
+  right: 5px;
 `;
 
 export const Icon = styled.div`
@@ -75,9 +86,32 @@ export const SideBtnWrap = styled.div`
   justify-content: center;
 `;
 
-export const SidebarRoute = styled(LinkR)`
+export const SidebarSignIn = styled(LinkR)`
   border-radius: 50px;
   background: #256ce1;
+
+  white-space: nowrap;
+  padding: 16px 64px;
+  color: #fff;
+
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #010606;
+  }
+`;
+
+export const SidebarLogOut = styled.div`
+  border-radius: 50px;
+  background: #ff3314;
 
   white-space: nowrap;
   padding: 16px 64px;

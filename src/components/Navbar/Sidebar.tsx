@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   SidebarContainer,
   Icon,
@@ -7,8 +7,12 @@ import {
   SidebarMenu,
   SidebarLink,
   SideBtnWrap,
-  SidebarRoute,
+  SidebarSignIn,
+  SignedInText,
+  SidebarLogOut,
 } from "./SidebarElements";
+import { auth } from "../../firebase/firebaseConfig";
+import { UserContext } from "../../providers/UserProvider";
 
 interface Props {
   isOpen: boolean;
@@ -16,13 +20,19 @@ interface Props {
 }
 
 const Sidebar = ({ isOpen, toggle }: Props) => {
+  const user = useContext(UserContext);
+
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
         <CloseIcon />
       </Icon>
       <SidebarWrapper>
+        {user && <SignedInText>Signed in as {user.displayName}</SignedInText>}
         <SidebarMenu>
+          <SidebarLink to="/" onClick={toggle}>
+            Home
+          </SidebarLink>
           <SidebarLink to="/about" onClick={toggle}>
             About
           </SidebarLink>
@@ -31,7 +41,18 @@ const Sidebar = ({ isOpen, toggle }: Props) => {
           </SidebarLink>
         </SidebarMenu>
         <SideBtnWrap>
-          <SidebarRoute to="signin">Sign In</SidebarRoute>
+          {!user ? (
+            <SidebarSignIn to="signin">Sign In</SidebarSignIn>
+          ) : (
+            <SidebarLogOut
+              onClick={() => {
+                auth.signOut();
+                toggle();
+              }}
+            >
+              Log out
+            </SidebarLogOut>
+          )}
         </SideBtnWrap>
       </SidebarWrapper>
     </SidebarContainer>
