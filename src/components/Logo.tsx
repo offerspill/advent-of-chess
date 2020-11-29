@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Windows from "./Windows";
 import logo from "../assets/logo.png";
-import Logo from "./Logo";
 
 const StyledLogo = styled.div`
   img {

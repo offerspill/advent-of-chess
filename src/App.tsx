@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "./components/Navbar/Navbar";
-import Frontpage from "./components/Frontpage";
+import Frontpage from "./components/Frontpage/Frontpage";
 import { client } from "./sanity";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Post from "./components/Post";
-import Logo from "./components/Logo";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Post from "./components/Post/Post";
 import ScrollToTop from "./utils/ScrollToTop";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import UserProvider from "./providers/UserProvider";
 import ProfilePage from "./components/ProfilePage";
 import PasswordReset from "./components/PasswordReset";
-import Leaderboard from "./components/Leaderboard";
-import About from "./components/About";
-import Footer from "./components/Footer";
+import Leaderboard from "./components/Leaderboard/Leaderboard";
+import About from "./components/About/About";
+import Footer from "./components/Footer/Footer";
 import Sidebar from "./components/Navbar/Sidebar";
 
 const Container = styled.div`

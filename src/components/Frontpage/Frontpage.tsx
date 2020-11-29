@@ -1,114 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import Windows from "./Windows";
+import Windows from "../Windows";
 import Fade from "react-reveal/Fade";
-import Countdown from "react-countdown";
 import Zoom from "react-reveal/Zoom";
-import { FaChessKing } from "react-icons/fa";
-
-const StyledFrontpage = styled.div`
-  position: relative;
-  padding-top: 40px;
-  padding-bottom: 40px;
-
-  max-width: 1320px;
-
-  @media (max-width: 1390px) {
-    max-width: 1000px;
-  }
-
-  @media (max-width: 1075px) {
-    max-width: 680px;
-  }
-
-  @media (max-width: 800px) {
-    max-width: 360px;
-  }
-
-  margin: 0 auto;
-`;
-
-const Info = styled.div`
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-
-  @media (max-width: 480px) {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-`;
-
-const Square1 = styled.div`
-  position: absolute;
-
-  top: 80px;
-  right: 300px;
-
-  width: 100px;
-  height: 100px;
-  background: #000;
-
-  transform: rotateZ(45deg);
-
-  @media (max-width: 1390px) {
-    right: 30px;
-    width: 80px;
-    height: 80px;
-  }
-
-  @media (max-width: 1075px) {
-    display: none;
-  }
-`;
-
-const Square2 = styled.div`
-  position: absolute;
-
-  top: 80px;
-  right: 440px;
-
-  width: 100px;
-  height: 100px;
-  background: #000;
-
-  transform: rotateZ(45deg);
-
-  @media (max-width: 1390px) {
-    right: 140px;
-    width: 80px;
-    height: 80px;
-  }
-
-  @media (max-width: 1075px) {
-    display: none;
-  }
-`;
-
-const FaChessKingStyled = styled(FaChessKing)`
-  position: absolute;
-
-  top: 80px;
-  right: 320px;
-
-  width: 100px;
-  height: 100px;
-  color: #fff;
-
-  @media (max-width: 1390px) {
-    right: 40px;
-    width: 80px;
-    height: 80px;
-  }
-
-  @media (max-width: 1075px) {
-    display: none;
-  }
-`;
-
-const AlreadyLoggedInText = styled.span`
-  text-align: center;
-  width: 100vw;
-`;
+import {
+  StyledFrontpage,
+  Info,
+  Square1,
+  Square2,
+  FaChessKingStyled,
+} from "./FrontpageElements";
 
 interface FrontpageProps {
   posts: any;
