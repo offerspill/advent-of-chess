@@ -48,7 +48,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   if (!post) return <Styled404>404</Styled404>;
 
-  const date = new Date(2020, 10, parseInt(post.day, 10)).getTime();
+  const date = new Date(2020, 11, parseInt(post.day, 10)).getTime();
   const currDate = new Date().getTime();
 
   const diff = currDate - date;
