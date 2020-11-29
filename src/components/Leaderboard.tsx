@@ -1,14 +1,6 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
+import React from "react";
 import styled from "styled-components";
-import Alert from "@material-ui/lab/Alert";
-import { CloseSharp } from "@material-ui/icons";
-import { auth } from "../firebase/firebaseConfig";
-import { UserContext } from "../providers/UserProvider";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -70,13 +62,15 @@ const Leaderboard = () => {
         <Table aria-label="simple table">
           <StyledTableHead>
             <TableRow>
+              <TableCell>#</TableCell>
               <TableCell>Username</TableCell>
               <TableCell align="center">Number of correct answers</TableCell>
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {leaderboard.map((user) => (
+            {leaderboard.map((user, i) => (
               <StyledTableRow key={user.username}>
+                <TableCell>{i + 1}</TableCell>
                 <TableCell>{user.username}</TableCell>
                 <TableCell align="center">{user.score}</TableCell>
               </StyledTableRow>
