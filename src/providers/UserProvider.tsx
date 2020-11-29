@@ -10,7 +10,6 @@ class UserProvider extends Component {
 
   componentDidMount = async () => {
     auth.onAuthStateChanged(async (userAuth) => {
-      console.log("auth", userAuth?.emailVerified);
       const user = await generateUserDocument(userAuth);
       this.setState({ user });
     });

@@ -39,9 +39,11 @@ function App() {
     setIsOpen(!isOpen);
   };
 
-  const day = 24;
+  const currentDay = new Date();
+  const currentDate = currentDay.getUTCDate();
+  const currentMonth = currentDay.getUTCMonth();
 
-  const query = `*[_type == $type  && day <= ${day.toString(
+  const query = `*[_type == $type  && day <= ${currentDate.toString(
     10
   )}]{author, body, title, day, answer}`;
 
@@ -57,7 +59,7 @@ function App() {
           console.error("Oh no, error occured: ", err);
         });
     };
-    fetchPosts();
+    currentMonth === 11 && fetchPosts();
   }, []);
 
   return (

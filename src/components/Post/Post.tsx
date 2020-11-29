@@ -39,15 +39,6 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const [boardSize, setBoardSize] = useState(600);
 
-  const date = new Date(2009, 11, parseInt("11", 10), 2, 20, 0).getTime();
-  const currDate = new Date().getTime();
-
-  const diff = currDate - date;
-
-  const openSubmission = diff < 86400000;
-
-  console.log("post", post);
-
   useEffect(() => {
     let bodyWidth = document.body.clientWidth - 100;
     if (bodyWidth > 600) bodyWidth = 600;
@@ -56,6 +47,13 @@ const Post = ({ nr, posts }: WindowProps) => {
   }, []);
 
   if (!post) return <Styled404>404</Styled404>;
+
+  const date = new Date(2020, 10, parseInt(post.day, 10)).getTime();
+  const currDate = new Date().getTime();
+
+  const diff = currDate - date;
+
+  const openSubmission = diff < 86400000;
 
   const StyledChessGround = styled.div`
     margin: 0 auto;
