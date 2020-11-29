@@ -26,7 +26,6 @@ export const SignedInText = styled.div`
   color: white;
   text-align: center;
   font-size: 18px;
-  margin-bottom: 2rem;
 `;
 
 export const CloseIcon = styled(FaTimes)`
@@ -49,6 +48,7 @@ export const Icon = styled.div`
 
 export const SidebarWrapper = styled.div`
   color: #fff;
+  margin-top: 3rem;
 `;
 
 export const SidebarMenu = styled.ul`
@@ -110,8 +110,11 @@ export const SidebarSignIn = styled(LinkR)`
 `;
 
 export const SidebarLogOut = styled.div`
+  position: absolute;
   border-radius: 50px;
   background: #ff3314;
+
+  bottom: 50px;
 
   white-space: nowrap;
   padding: 16px 64px;
