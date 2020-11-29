@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const Styled404 = styled.h1`
+  font-size: 100px;
+  text-align: center;
+`;
+
 export const StyledPost = styled.div`
   margin-top: 6rem;
   margin-bottom: 6rem;

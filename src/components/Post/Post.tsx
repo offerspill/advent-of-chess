@@ -15,7 +15,7 @@ import { validateFEN } from "../../utils/chessUtils";
 import { UserContext } from "../../providers/UserProvider";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { Link } from "react-router-dom";
-import { StyledPost, StyledClosedSubmissions } from "./PostElements";
+import { StyledPost, StyledClosedSubmissions, Styled404 } from "./PostElements";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -53,7 +53,7 @@ const Post = ({ nr, posts }: WindowProps) => {
     setBoardSize(bodyWidth);
   }, []);
 
-  if (!post) return null;
+  if (!post) return <Styled404>404</Styled404>;
 
   const StyledChessGround = styled.div`
     margin: 0 auto;

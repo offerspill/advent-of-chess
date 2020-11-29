@@ -17,7 +17,7 @@ const Leaderboard = () => {
   return (
     <StyledLeaderboard>
       <h1>Leaderboard</h1>
-      <Info>Last updated December 2nd, 14:35 UTC.</Info>
+      {/*<Info>Last updated December 2nd, 14:35 UTC.</Info>*/}
       <StyledTableContainer component={Paper}>
         <Table aria-label="simple table">
           <StyledTableHead>
