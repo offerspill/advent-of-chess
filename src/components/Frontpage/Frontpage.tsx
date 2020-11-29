@@ -61,7 +61,7 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
         <Fade top cascade>
           <div>
             <h1>Solve chess problems every day until Christmas.</h1>
-            <h1>Win a chess board signed by Magnus Carlsen.</h1>
+            <h1>Win a chessboard signed by Magnus Carlsen.</h1>
             <h1>
               The first problem will unlock on December 1st at midnight (UTC).
             </h1>
