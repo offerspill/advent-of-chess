@@ -43,7 +43,7 @@ function App() {
 
   const query = `*[_type == $type  && day <= ${day.toString(
     10
-  )}]{author, body, title, day}`;
+  )}]{author, body, title, day, answer}`;
 
   useEffect(() => {
     const fetchPosts = () => {

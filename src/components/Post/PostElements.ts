@@ -92,5 +92,11 @@ export const StyledClosedSubmissions = styled.div`
   max-width: 600px;
   margin: 0 auto;
   margin-top: 4rem;
-  text-align: center;
+
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+  }
+  text-align: left;
 `;

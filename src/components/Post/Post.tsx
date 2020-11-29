@@ -39,12 +39,14 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const [boardSize, setBoardSize] = useState(600);
 
-  const date = new Date(2020, 11, parseInt("13", 10), 2, 20, 0).getTime();
+  const date = new Date(2009, 11, parseInt("11", 10), 2, 20, 0).getTime();
   const currDate = new Date().getTime();
 
   const diff = currDate - date;
 
   const openSubmission = diff < 86400000;
+
+  console.log("post", post);
 
   useEffect(() => {
     let bodyWidth = document.body.clientWidth - 100;
@@ -297,19 +299,26 @@ const Post = ({ nr, posts }: WindowProps) => {
       ) : (
         <StyledClosedSubmissions>
           <h2>Closed</h2>
-
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              Show solution
+              <strong>Show solution</strong>
             </AccordionSummary>
             <AccordionDetails>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              {post.answer ? (
+                <BlockContent
+                  blocks={post.answer}
+                  imageOptions={{ w: 550 }}
+                  projectId="l3m1tz9l"
+                  dataset="production"
+                  serializers={serializers}
+                />
+              ) : (
+                <p>The solution will appear here soon!</p>
+              )}
             </AccordionDetails>
           </Accordion>
         </StyledClosedSubmissions>
