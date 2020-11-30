@@ -28,12 +28,7 @@ const About = () => {
   return (
     <StyledAbout>
       {config ? (
-        <BlockContent
-          blocks={config.about}
-          imageOptions={{ w: 550 }}
-          projectId="l3m1tz9l"
-          dataset="production"
-        />
+        <BlockContent blocks={config.about} imageOptions={{ w: 550 }} />
       ) : (
         <h2>...</h2>
       )}

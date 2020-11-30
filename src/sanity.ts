@@ -1,7 +1,7 @@
 const sanityClient = require("@sanity/client");
 
 export const client = sanityClient({
-  projectId: "l3m1tz9l",
-  dataset: "production",
+  projectId: process.env.REACT_APP_SANITY_ID,
+  dataset: "local_preview",
   useCdn: true,
 });

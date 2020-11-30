@@ -170,6 +170,11 @@ const Post = ({ nr, posts }: WindowProps) => {
     }
   };
 
+  const dataset =
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_SANITY_DATASET_PROD
+      : process.env.REACT_APP_SANITY_DATASET_LOCAL;
+
   return (
     <StyledPost>
       <h1 className="day">{post.day}</h1>
@@ -177,8 +182,8 @@ const Post = ({ nr, posts }: WindowProps) => {
         <BlockContent
           blocks={post.body}
           imageOptions={{ w: 550 }}
-          projectId="l3m1tz9l"
-          dataset="production"
+          projectId={process.env.REACT_APP_SANITY_ID}
+          dataset={dataset}
           serializers={serializers}
         />
       </div>
@@ -310,8 +315,6 @@ const Post = ({ nr, posts }: WindowProps) => {
                 <BlockContent
                   blocks={post.answer}
                   imageOptions={{ w: 550 }}
-                  projectId="l3m1tz9l"
-                  dataset="production"
                   serializers={serializers}
                 />
               ) : (

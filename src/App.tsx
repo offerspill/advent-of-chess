@@ -59,7 +59,7 @@ function App() {
           console.error("Oh no, error occured: ", err);
         });
     };
-    currentMonth === 11 && fetchPosts();
+    currentMonth === 10 && fetchPosts();
   }, []);
 
   return (
