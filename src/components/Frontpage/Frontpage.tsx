@@ -62,9 +62,7 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
           <div>
             <h1>Solve chess problems every day until Christmas.</h1>
             <h1>Win a chessboard signed by Magnus Carlsen.</h1>
-            <h1>
-              The first problem will unlock on December 1st at midnight (UTC).
-            </h1>
+            <h1>The problems unlock at midnight UTC.</h1>
           </div>
         </Fade>
         <Zoom bottom cascade>
