@@ -10,6 +10,11 @@ const About = () => {
 
   const query = `*[_type == $type][0]`;
 
+  const dataset =
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_SANITY_DATASET_PROD
+      : process.env.REACT_APP_SANITY_DATASET_LOCAL;
+
   useEffect(() => {
     const fetchPosts = () => {
       client
@@ -28,7 +33,12 @@ const About = () => {
   return (
     <StyledAbout>
       {config ? (
-        <BlockContent blocks={config.about} imageOptions={{ w: 550 }} />
+        <BlockContent
+          blocks={config.about}
+          imageOptions={{ w: 900 }}
+          projectId={process.env.REACT_APP_SANITY_ID}
+          dataset={dataset}
+        />
       ) : (
         <h2>...</h2>
       )}
