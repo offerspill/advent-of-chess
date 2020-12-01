@@ -48,12 +48,9 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   if (!post) return <Styled404>404</Styled404>;
 
-  const date = new Date(2020, 11, parseInt(post.day, 10)).getTime();
-  const currDate = new Date().getTime();
+  const currentDate = new Date().getUTCDate();
 
-  const diff = currDate - date;
-
-  const openSubmission = diff < 86400000;
+  const openSubmission = currentDate === post.day;
 
   const StyledChessGround = styled.div`
     margin: 0 auto;
