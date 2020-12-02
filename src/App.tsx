@@ -27,7 +27,7 @@ const Body = styled.div`
   position: relative;
 
   @media screen and (max-width: 768px) {
-    padding-bottom: 290px;
+    padding-bottom: 360px;
   }
 `;
 

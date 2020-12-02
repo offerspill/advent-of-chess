@@ -1,7 +1,7 @@
 import React from "react";
 import offerspillLogo from "../../assets/offerspill-logo.png";
 import sanityLogo from "../../assets/sanity-logo.png";
-import { FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaTwitter, FaFacebook, FaGithub } from "react-icons/fa";
 import { StyledFooter, StyledFooterIcons } from "./FooterElements";
 
 const Footer = () => {
@@ -29,6 +29,15 @@ const Footer = () => {
             rel="noopener"
           >
             <FaFacebook size={32} />
+          </a>
+        </div>
+        <div className="icon">
+          <a
+            href="https://github.com/offerspill/advent-of-chess"
+            target="_blank"
+            rel="noopener"
+          >
+            <FaGithub size={32} />
           </a>
         </div>
         <div className="icon">
