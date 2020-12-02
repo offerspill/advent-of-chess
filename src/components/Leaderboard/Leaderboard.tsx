@@ -17,20 +17,20 @@ const Leaderboard = () => {
   return (
     <StyledLeaderboard>
       <h1>Leaderboard</h1>
-      {/*<Info>Last updated December 2nd, 14:35 UTC.</Info>*/}
+      <Info>Last updated December 1st, 16:22 UTC.</Info>
       <StyledTableContainer component={Paper}>
         <Table aria-label="simple table">
           <StyledTableHead>
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Username</TableCell>
-              <TableCell align="center">Number of correct answers</TableCell>
+              <TableCell align="center">Solved problems</TableCell>
             </TableRow>
           </StyledTableHead>
           <TableBody>
             {leaderboard.map((user, i) => (
               <StyledTableRow key={user.username}>
-                <TableCell>{i + 1}</TableCell>
+                <TableCell>{user.pos}</TableCell>
                 <TableCell>{user.username}</TableCell>
                 <TableCell align="center">{user.score}</TableCell>
               </StyledTableRow>

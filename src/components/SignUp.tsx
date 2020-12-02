@@ -12,7 +12,18 @@ import { UserContext } from "../providers/UserProvider";
 import styled from "styled-components";
 import Alert from "@material-ui/lab/Alert";
 import { CloseSharp } from "@material-ui/icons";
-import { SettingsRemoteOutlined } from "@material-ui/icons";
+
+const TextFieldWithDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    text-align: left;
+    font-size: 13px;
+    color: #6a6a6a;
+    font-weight: 100;
+  }
+`;
 
 const StyledSignUp = styled.div`
   margin-top: 6rem;
@@ -165,21 +176,25 @@ const SignUp = () => {
                 error={errors.username}
                 helperText={errors.username && "Invalid username"}
               />
-              <TextField
-                className="textfield"
-                inputRef={register({
-                  required: "Required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "invalid email address",
-                  },
-                })}
-                name="email"
-                label="Email"
-                variant="filled"
-                error={errors.email}
-                helperText={errors.email && "Invalid email"}
-              />
+              <TextFieldWithDescription className="textfield">
+                <TextField
+                  inputRef={register({
+                    required: "Required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "invalid email address",
+                    },
+                  })}
+                  name="email"
+                  label="Email"
+                  variant="filled"
+                  error={errors.email}
+                  helperText={errors.email && "Invalid email"}
+                />
+                <span className="description">
+                  We will only use it for password reset and contacting winners.
+                </span>
+              </TextFieldWithDescription>
               <TextField
                 className="textfield"
                 inputRef={register({ required: "Required" })}
