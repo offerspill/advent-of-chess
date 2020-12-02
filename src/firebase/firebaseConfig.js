@@ -26,9 +26,14 @@ export const getUsers = () => {
 
 export const getUniqueLowercaseUsernames = async () => {
   const uniqueUsers = await getUsers();
-  const uniqueDisplayNames = uniqueUsers.map((user) =>
-    user.displayName.toLowerCase()
-  );
+  const uniqueDisplayNames = uniqueUsers.map((user) => {
+    if (user && user.displayName) {
+      return user.displayName.toLowerCase();
+    } else {
+      console.error("Found undefined username!");
+      return "undefined";
+    }
+  });
 
   return uniqueDisplayNames;
 };
