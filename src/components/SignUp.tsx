@@ -169,12 +169,16 @@ const SignUp = () => {
                 className="textfield"
                 inputRef={register({
                   required: "Required",
+                  pattern: {
+                    value: /^(?=[a-zA-Z0-9._]{2,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/i,
+                    message: "Invalid username",
+                  },
                 })}
                 name="displayName"
                 label="Username"
                 variant="filled"
-                error={errors.username}
-                helperText={errors.username && "Invalid username"}
+                error={errors.displayName}
+                helperText={errors.displayName && "Invalid username"}
               />
               <TextFieldWithDescription className="textfield">
                 <TextField
