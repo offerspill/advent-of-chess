@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
+    "@types/preval.macro": "^3.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
@@ -24,6 +25,7 @@
     "dotenv": "^8.2.0",
     "fen-validator": "^1.2.0",
     "firebase": "^8.0.2",
+    "preval.macro": "^5.0.0",
     "react": "^17.0.1",
     "react-chessground": "^1.5.0",
     "react-countdown": "^2.3.1",
@@ -43,7 +45,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "netlify deploy --prod --dir=build"
   },
   "eslintConfig": {
     "extends": [
