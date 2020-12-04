@@ -15,7 +15,7 @@ import {
 } from "./LeaderboardElements";
 
 const Leaderboard = () => {
-  const dateTimeStamp = preval`module.exports = new Date().toUTCString();`;
+  const dateTimeStamp = preval`module.exports = new Date().toUTCString().split("2020").slice(0, 2).map(b => b.trim()).join(", ").replace("GMT", "UTC");`;
 
   return (
     <StyledLeaderboard>
