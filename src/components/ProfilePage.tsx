@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../providers/UserProvider";
+import user_scores from "../files/user_scores.json";
+import { FaCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 const StyledProfilePage = styled.div`
   margin: 0 auto;
@@ -31,8 +34,32 @@ const StyledProfilePage = styled.div`
   }
 `;
 
+const UserScores = styled.div`
+  display: flex;
+
+  .score {
+    margin-left: 1rem;
+
+    svg {
+      margin-top: 3px;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .wrong {
+      color: red;
+    }
+  }
+`;
+
 const ProfilePage = () => {
   const user = useContext(UserContext);
+
+  if (!user) return null;
+
+  const scores = user_scores[user.displayName];
 
   return (
     <StyledProfilePage>
@@ -44,6 +71,25 @@ const ProfilePage = () => {
         </>
       ) : (
         <div>Not logged in.</div>
+      )}
+      <h1>Scores</h1>
+      {scores ? (
+        scores.map((score) => {
+          return (
+            <UserScores>
+              <div className="day">Day {score.day}:</div>
+              <div className="score">
+                {score.score === 1 ? (
+                  <FaCheck className="correct" />
+                ) : (
+                  <ImCross className="wrong" />
+                )}
+              </div>
+            </UserScores>
+          );
+        })
+      ) : (
+        <h2>No submitted answers</h2>
       )}
     </StyledProfilePage>
   );
