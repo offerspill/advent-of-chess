@@ -61,6 +61,10 @@ const ProfilePage = () => {
 
   const scores = user_scores[user.displayName];
 
+  const numScores = scores?.filter((s: any) => {
+    return s.score === 1;
+  }).length;
+
   return (
     <StyledProfilePage>
       <h1>Profile</h1>
@@ -72,22 +76,24 @@ const ProfilePage = () => {
       ) : (
         <div>Not logged in.</div>
       )}
-      <h1>Scores</h1>
       {scores ? (
-        scores.map((score) => {
-          return (
-            <UserScores>
-              <div className="day">Day {score.day}:</div>
-              <div className="score">
-                {score.score === 1 ? (
-                  <FaCheck className="correct" />
-                ) : (
-                  <ImCross className="wrong" />
-                )}
-              </div>
-            </UserScores>
-          );
-        })
+        <>
+          <h1>{numScores} points</h1>
+          {scores.map((score) => {
+            return (
+              <UserScores>
+                <div className="day">Day {score.day}:</div>
+                <div className="score">
+                  {score.score === 1 ? (
+                    <FaCheck className="correct" />
+                  ) : (
+                    <ImCross className="wrong" />
+                  )}
+                </div>
+              </UserScores>
+            );
+          })}
+        </>
       ) : (
         <h2>No submitted answers</h2>
       )}
