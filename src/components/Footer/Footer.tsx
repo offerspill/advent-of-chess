@@ -33,7 +33,7 @@ const Footer = () => {
         </div>
         <div className="icon">
           <a
-            href="https://github.com/offerspill/advent-of-chess"
+            href="https://discord.gg/ekjjVscxNh"
             target="_blank"
             rel="noopener"
           >
