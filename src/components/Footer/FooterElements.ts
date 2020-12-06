@@ -19,7 +19,7 @@ export const StyledFooter = styled.footer`
   }
 
   @media screen and (max-width: 768px) {
-    height: 360px;
+    height: 410px;
     text-align: center;
   }
 `;
