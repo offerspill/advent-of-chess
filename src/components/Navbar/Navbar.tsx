@@ -15,8 +15,10 @@ import {
   SignedInText,
   LogOutBtn,
   LogOutWrapper,
+  ExternalNavLink,
 } from "./NavbarElements";
 import logo from "../../assets/logo.png";
+import { FiExternalLink } from "react-icons/fi";
 
 interface Props {
   toggle: () => void;
@@ -35,6 +37,14 @@ const Navbar = ({ toggle }: Props) => {
         <NavMenu>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/leaderboard">Leaderboard</NavLink>
+          {/*<ExternalNavLink
+            href="https://discord.gg/ekjjVscxNh"
+            target="_blank"
+            rel="noopener"
+          >
+            Discord
+            <FiExternalLink className="external-link-icon" />
+          </ExternalNavLink>*/}
         </NavMenu>
         {!user ? (
           <NavBtn>

@@ -20,6 +20,25 @@ export const Nav = styled.nav`
   }
 `;
 
+export const ExternalNavLink = styled.a`
+  color: #000;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  padding: 0 1rem;
+
+  height: 100%;
+
+  cursor: pointer;
+
+  .external-link-icon {
+    margin-left: 5px;
+    margin-bottom: 3px;
+    font-size: 15px;
+  }
+`;
+
 export const NavLink = styled(Link)`
   color: #000;
   display: flex;
