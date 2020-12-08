@@ -17,9 +17,12 @@ import {
 const Leaderboard = () => {
   const dateTimeStamp = preval`module.exports = new Date().toUTCString().split("2020").slice(0, 2).map(b => b.trim()).join(", ").replace("GMT", "UTC");`;
 
+  const sumPoints = leaderboard.reduce((s, user) => user.score + s, 0);
+
   return (
     <StyledLeaderboard>
       <h1>Leaderboard</h1>
+      <h3>Total problems solved: {sumPoints}</h3>
       <Info>Last updated {dateTimeStamp}.</Info>
       <StyledTableContainer component={Paper}>
         <Table aria-label="simple table">

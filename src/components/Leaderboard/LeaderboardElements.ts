@@ -10,7 +10,8 @@ export const StyledLeaderboard = styled.div`
   padding-left: 2rem;
   padding-right: 2rem;
 
-  h1 {
+  h1,
+  h3 {
     text-align: center;
   }
 `;
