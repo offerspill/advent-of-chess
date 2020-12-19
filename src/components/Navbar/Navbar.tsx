@@ -37,6 +37,7 @@ const Navbar = ({ toggle }: Props) => {
         <NavMenu>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/leaderboard">Leaderboard</NavLink>
+          {user && <NavLink to="/profile">Profile</NavLink>}
           {/*<ExternalNavLink
             href="https://discord.gg/ekjjVscxNh"
             target="_blank"

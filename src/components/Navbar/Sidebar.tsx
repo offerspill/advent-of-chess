@@ -40,6 +40,11 @@ const Sidebar = ({ isOpen, toggle }: Props) => {
           <SidebarLink to="/leaderboard" onClick={toggle}>
             Leaderboard
           </SidebarLink>
+          {user && (
+            <SidebarLink to="/profile" onClick={toggle}>
+              Profile
+            </SidebarLink>
+          )}
         </SidebarMenu>
         <SideBtnWrap>
           {!user ? (
