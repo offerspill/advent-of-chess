@@ -1,6 +1,4 @@
-import React, { useContext, CSSProperties } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import IconButton from "@material-ui/core/IconButton";
 import Alert from "@material-ui/lab/Alert";
@@ -15,10 +13,8 @@ import {
   SignedInText,
   LogOutBtn,
   LogOutWrapper,
-  ExternalNavLink,
 } from "./NavbarElements";
 import logo from "../../assets/logo.png";
-import { FiExternalLink } from "react-icons/fi";
 
 interface Props {
   toggle: () => void;

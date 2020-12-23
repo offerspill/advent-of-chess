@@ -10,7 +10,6 @@ import {
   SidebarSignIn,
   SignedInText,
   SidebarLogOut,
-  ContentWrapper,
 } from "./SidebarElements";
 import { auth } from "../../firebase/firebaseConfig";
 import { UserContext } from "../../providers/UserProvider";

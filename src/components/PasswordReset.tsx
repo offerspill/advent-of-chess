@@ -1,18 +1,11 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import {
-  auth,
-  generateUserDocument,
-  getUniqueLowercaseUsernames,
-} from "../firebase/firebaseConfig";
+import React, { useState } from "react";
+import { auth } from "../firebase/firebaseConfig";
 import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { UserContext } from "../providers/UserProvider";
 import styled from "styled-components";
 import Alert from "@material-ui/lab/Alert";
 import { CloseSharp } from "@material-ui/icons";
-import { SettingsRemoteOutlined } from "@material-ui/icons";
 
 const StyledPasswordReset = styled.div`
   margin-top: 6rem;

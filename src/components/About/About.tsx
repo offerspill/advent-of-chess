@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { client } from "../../sanity";
 import { StyledAbout } from "./AboutElements";
 

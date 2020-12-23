@@ -9,15 +9,15 @@ const Footer = () => {
     <StyledFooter>
       <StyledFooterIcons>
         <div className="icon">
-          <a href="https://offerspill.com/" target="_blank" rel="noopener">
-            <img src={offerspillLogo} />
+          <a href="https://offerspill.com/" target="_blank" rel="noreferrer">
+            <img src={offerspillLogo} alt="Offerspill-logo" />
           </a>
         </div>
         <div className="icon">
           <a
             href="https://twitter.com/offerspill"
             target="_blank"
-            rel="noopener"
+            rel="noreferrer"
           >
             <FaTwitter size={32} />
           </a>
@@ -26,7 +26,7 @@ const Footer = () => {
           <a
             href="https://facebook.com/offerspillsk"
             target="_blank"
-            rel="noopener"
+            rel="noreferrer"
           >
             <FaFacebook size={32} />
           </a>
@@ -35,7 +35,7 @@ const Footer = () => {
           <a
             href="https://discord.gg/ekjjVscxNh"
             target="_blank"
-            rel="noopener"
+            rel="noreferrer"
           >
             <FaDiscord size={32} />
           </a>
@@ -44,13 +44,13 @@ const Footer = () => {
           <a
             href="https://github.com/offerspill/advent-of-chess"
             target="_blank"
-            rel="noopener"
+            rel="noreferrer"
           >
             <FaGithub size={32} />
           </a>
         </div>
         <div className="icon">
-          <a href="https://sanity.io" target="_blank" rel="noopener">
+          <a href="https://sanity.io" target="_blank" rel="noreferrer">
             <img className="sanityLogo" src={sanityLogo} />
           </a>
         </div>
