@@ -22,8 +22,9 @@ const Leaderboard = () => {
   return (
     <StyledLeaderboard>
       <h1>Leaderboard</h1>
-      <h3>Total problems solved: {sumPoints}</h3>
-      <Info>Last updated {dateTimeStamp}.</Info>
+      <h3>
+        {sumPoints} problems solved by {leaderboard.length} users.
+      </h3>
       <StyledTableContainer component={Paper}>
         <Table aria-label="simple table">
           <StyledTableHead>
