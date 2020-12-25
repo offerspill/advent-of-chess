@@ -16,6 +16,9 @@ import { UserContext } from "../../providers/UserProvider";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { Link } from "react-router-dom";
 import { StyledPost, StyledClosedSubmissions, Styled404 } from "./PostElements";
+import { Player } from "video-react";
+import video from "../../assets/xmas.mp4";
+import "video-react/dist/video-react.css";
 
 const BlockContent = require("@sanity/block-content-to-react");
 
@@ -23,6 +26,13 @@ interface WindowProps {
   nr: string;
   posts: any;
 }
+
+const StyledPlayer = styled(Player)`
+  margin: 0 auto;
+  margin-bottom: 3rem;
+
+  max-width: 337px;
+`;
 
 const Post = ({ nr, posts }: WindowProps) => {
   const { handleSubmit, register, errors } = useForm();
@@ -175,6 +185,15 @@ const Post = ({ nr, posts }: WindowProps) => {
   return (
     <StyledPost>
       <h1 className="day">{post.day}</h1>
+      {post.day === 24 && (
+        <StyledPlayer
+          playsInline
+          fluid={false}
+          height={600}
+          width="auto"
+          src={video}
+        />
+      )}
       <div className="body">
         <BlockContent
           blocks={post.body}

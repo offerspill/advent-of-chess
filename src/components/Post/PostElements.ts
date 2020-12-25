@@ -6,6 +6,7 @@ export const Styled404 = styled.h1`
 `;
 
 export const StyledPost = styled.div`
+  position: relative;
   margin-top: 6rem;
   margin-bottom: 6rem;
   padding-left: 2rem;
