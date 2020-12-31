@@ -40,39 +40,14 @@ const countdownRenderer = ({
 };
 
 const Frontpage = ({ posts, ...props }: FrontpageProps) => {
-  const compare = (a: any, b: any) => {
-    let aint = parseInt(a.day, 10);
-    let bint = parseInt(b.day, 10);
-
-    if (aint < bint) {
-      return -1;
-    }
-    if (aint > bint) {
-      return 1;
-    }
-    return 0;
-  };
-
-  const postsSorted = posts.sort(compare);
-
   return (
     <StyledFrontpage>
       <Info>
         <Fade top cascade>
           <div>
-            <h1>Advent of Chess 2020 is over!</h1>
-            <h1>Thanks to everyone who participated!</h1>
-            <h1>
-              Join our{" "}
-              <a
-                href="https://discord.gg/7GjpcUzG2w"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Discord server
-              </a>{" "}
-              for updates on who won
-            </h1>
+            <h1>Advent of Chess 2020 is over</h1>
+            <h1>Thanks to everyone who participated</h1>
+            <h1>See you next year!</h1>
           </div>
         </Fade>
         <Zoom bottom cascade>
