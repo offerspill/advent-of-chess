@@ -43,9 +43,7 @@ function App() {
   const currentDate = currentDay.getUTCDate();
   const currentMonth = currentDay.getUTCMonth();
 
-  const query = `*[_type == $type  && day <= ${currentDate.toString(
-    10
-  )}]{author, body, title, day, answer}`;
+  const query = `*[_type == $type]{author, body, title, day, answer}`;
 
   useEffect(() => {
     const fetchPosts = () => {
@@ -59,7 +57,7 @@ function App() {
           console.error("Oh no, error occured: ", err);
         });
     };
-    currentMonth === 11 && fetchPosts();
+    fetchPosts();
   }, []);
 
   return (
