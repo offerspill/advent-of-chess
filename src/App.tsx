@@ -43,7 +43,7 @@ function App() {
   const currentDate = currentDay.getUTCDate();
   const currentMonth = currentDay.getUTCMonth();
 
-  const query = `*[_type == $type]{author, body, title, day, answer}`;
+  const query = `*[_type == $type && year == 2021]{author, body, title, day, answer}`;
 
   useEffect(() => {
     const fetchPosts = () => {
@@ -59,6 +59,8 @@ function App() {
     };
     fetchPosts();
   }, []);
+
+  console.log("posts", posts);
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
