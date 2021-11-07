@@ -52,7 +52,7 @@ const Post = ({ nr, posts }: WindowProps) => {
 
   const currentDate = new Date().getUTCDate();
 
-  const openSubmission = currentDate === post.day;
+  const openSubmission = true;
 
   const StyledChessGround = styled.div`
     margin: 0 auto;
