@@ -164,10 +164,8 @@ const SignUp = () => {
           {" "}
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Register</h2>
-            <h4>You can't log in or create an account yet. Come back later.</h4>
             <div className="formElements">
               <TextField
-                disabled
                 className="textfield"
                 inputRef={register({
                   required: "Required",
@@ -184,7 +182,6 @@ const SignUp = () => {
               />
               <TextFieldWithDescription className="textfield">
                 <TextField
-                  disabled
                   inputRef={register({
                     required: "Required",
                     pattern: {
@@ -203,7 +200,6 @@ const SignUp = () => {
                 </span>
               </TextFieldWithDescription>
               <TextField
-                disabled
                 className="textfield"
                 inputRef={register({ required: "Required" })}
                 name="password"
@@ -218,7 +214,6 @@ const SignUp = () => {
               <CircularProgress size={24} className="buttonProgress" />
             ) : (
               <Button
-                disabled
                 type="submit"
                 variant="contained"
                 color="primary"

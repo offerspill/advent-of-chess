@@ -130,10 +130,8 @@ const SignIn = () => {
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Sign in</h2>
-            <h4>You can't log in or create an account yet. Come back later.</h4>
             <div className="formElements">
               <TextField
-                disabled
                 className="textfield"
                 inputRef={register({
                   required: "Required",
@@ -149,7 +147,6 @@ const SignIn = () => {
                 helperText={errors.email && "Invalid email"}
               />
               <TextField
-                disabled
                 className="textfield"
                 inputRef={register({ required: "Required" })}
                 name="password"
@@ -163,12 +160,7 @@ const SignIn = () => {
             {loading ? (
               <CircularProgress size={24} className="buttonProgress" />
             ) : (
-              <Button
-                disabled
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
+              <Button type="submit" variant="contained" color="primary">
                 Sign in
               </Button>
             )}
