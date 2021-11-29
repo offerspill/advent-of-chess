@@ -95,7 +95,13 @@ const ProfilePage = () => {
           })}
         </>
       ) : (
-        <h2>No submitted answers</h2>
+        <>
+          <h2>No submitted answers.</h2>
+          <h4>
+            If you just submitted an answer, it won't show up here until the
+            submission has been scored.
+          </h4>
+        </>
       )}
     </StyledProfilePage>
   );
