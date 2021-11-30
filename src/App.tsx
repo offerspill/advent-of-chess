@@ -62,8 +62,6 @@ function App() {
     currentMonth === 11 && fetchPosts();
   }, []);
 
-  console.log("posts", posts);
-
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <UserProvider>
