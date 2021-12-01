@@ -136,6 +136,15 @@ const SignUp = () => {
       return;
     }
 
+    if (!displayName) {
+      setError(
+        "No username. Try refreshing and typing your username again. Contact offerspill@gmail.com if the problem persists."
+      );
+      setOpenError(true);
+      setLoading(false);
+      return;
+    }
+
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
@@ -213,11 +222,7 @@ const SignUp = () => {
             {loading ? (
               <CircularProgress size={24} className="buttonProgress" />
             ) : (
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
+              <Button type="submit" variant="contained" color="primary">
                 Register
               </Button>
             )}

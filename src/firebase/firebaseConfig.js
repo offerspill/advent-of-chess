@@ -47,10 +47,6 @@ export const generateUserDocument = async (user, additionalData) => {
   if (!snapshot.exists) {
     const { email, displayName } = user;
 
-    if (!displayName) {
-      throw new Error("No username!");
-    }
-
     try {
       await userRef.set({
         displayName,
