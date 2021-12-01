@@ -277,6 +277,15 @@ const SignUp = () => {
                 </Button>
               </div>
             </>
+          ) : !user.displayName ? (
+            <>
+              <h2>It seems like there was an error with your user creation.</h2>
+              <div className="center">
+                Please contact offerspill@gmail.com from the registered email
+                and tell us which username you wanted to fix this. You won't be
+                able to submit any answers before this is fixed.
+              </div>
+            </>
           ) : (
             <>
               <h2>Check your email to verify your user</h2>
