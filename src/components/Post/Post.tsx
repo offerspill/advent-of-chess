@@ -134,8 +134,7 @@ const Post = ({ nr, posts }: WindowProps) => {
         data.set("Email", user.email);
         data.set("Username", user.displayName);
       } else {
-        data.set("Email", formData.email);
-        data.set("Name", formData.name);
+        data.set("Email", user.email);
       }
 
       data.set("Day", nr);
