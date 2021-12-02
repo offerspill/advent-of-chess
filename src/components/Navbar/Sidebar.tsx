@@ -47,7 +47,7 @@ const Sidebar = ({ isOpen, toggle }: Props) => {
         </SidebarMenu>
         <SideBtnWrap>
           {!user ? (
-            <SidebarSignIn to="signin">Sign In</SidebarSignIn>
+            <SidebarSignIn to="/signin">Sign In</SidebarSignIn>
           ) : (
             <SidebarLogOut
               onClick={() => {
