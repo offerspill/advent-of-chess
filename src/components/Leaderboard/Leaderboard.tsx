@@ -4,8 +4,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import leaderboard from "../../files/leaderboard.json";
-import preval from "preval.macro";
+import highscores from "../../files/leaderboard.json";
 import {
   StyledLeaderboard,
   Info,
@@ -15,7 +14,8 @@ import {
 } from "./LeaderboardElements";
 
 const Leaderboard = () => {
-  const dateTimeStamp = preval`module.exports = new Date().toUTCString().split("2020").slice(0, 2).map(b => b.trim()).join(", ").replace("GMT", "UTC");`;
+  const leaderboard = highscores.leaderboard;
+  const timestamp = highscores.updated;
 
   const sumPoints = leaderboard.reduce((s, user) => user.score + s, 0);
 
@@ -25,6 +25,7 @@ const Leaderboard = () => {
       <h3>
         {sumPoints} problems solved by {leaderboard.length} users.
       </h3>
+      <p>Last updated {timestamp}</p>
       <StyledTableContainer component={Paper}>
         <Table aria-label="simple table">
           <StyledTableHead>

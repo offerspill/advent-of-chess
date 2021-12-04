@@ -14,6 +14,10 @@ export const StyledLeaderboard = styled.div`
   h3 {
     text-align: center;
   }
+
+  p {
+    text-align: center;
+  }
 `;
 
 export const StyledTableContainer = styled(TableContainer)`
