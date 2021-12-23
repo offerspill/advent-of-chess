@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FormControlLabel } from "@material-ui/core";
 
 export const Styled404 = styled.h1`
   font-size: 100px;
@@ -87,6 +88,10 @@ export const StyledPost = styled.div`
     margin: 0 auto;
     margin-top: 2rem;
   }
+`;
+
+export const FormControlSwitch = styled(FormControlLabel)`
+  margin-bottom: 2rem;
 `;
 
 export const StyledClosedSubmissions = styled.div`

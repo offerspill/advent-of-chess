@@ -2,7 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Button, TextField, Collapse, IconButton } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Collapse,
+  IconButton,
+  Switch,
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -15,8 +21,12 @@ import { validateFEN } from "../../utils/chessUtils";
 import { UserContext } from "../../providers/UserProvider";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { Link } from "react-router-dom";
-import { StyledPost, StyledClosedSubmissions, Styled404 } from "./PostElements";
-import { Player } from "video-react";
+import {
+  StyledPost,
+  StyledClosedSubmissions,
+  Styled404,
+  FormControlSwitch,
+} from "./PostElements";
 import "video-react/dist/video-react.css";
 
 const BlockContent = require("@sanity/block-content-to-react");
@@ -38,6 +48,8 @@ const Post = ({ nr, posts }: WindowProps) => {
   const [openError, setOpenError] = useState(false);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
+
+  const [keepAccount, setKeepAccount] = useState(false);
 
   const [boardSize, setBoardSize] = useState(600);
 
@@ -140,6 +152,8 @@ const Post = ({ nr, posts }: WindowProps) => {
       data.set("Day", nr);
       data.set("Answer", formData.answer);
 
+      data.set("Keep account", keepAccount ? "Yes" : "No");
+
       const submitUrl = process.env.REACT_APP_SHEETS;
 
       fetch(submitUrl, {
@@ -208,6 +222,20 @@ const Post = ({ nr, posts }: WindowProps) => {
                     error={errors.answer}
                     helperText={errors.answer && "This field is required"}
                   />
+                  {currentDate === 24 && (
+                    <FormControlSwitch
+                      control={
+                        <Switch
+                          checked={keepAccount}
+                          onChange={() => {
+                            setKeepAccount(!keepAccount);
+                          }}
+                          color="primary"
+                        />
+                      }
+                      label="Yes, keep my account and email me next year."
+                    />
+                  )}
                 </div>
                 {loading && (
                   <CircularProgress size={24} className="buttonProgress" />
