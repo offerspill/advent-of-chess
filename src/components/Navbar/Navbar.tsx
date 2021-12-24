@@ -15,6 +15,32 @@ import {
   LogOutWrapper,
 } from "./NavbarElements";
 import logo from "../../assets/logo.png";
+import styled from "styled-components";
+
+const Banner = styled.div`
+  height: 64px;
+  background-color: #ff3314;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  p {
+    margin: 0;
+    padding: 0;
+
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
 
 interface Props {
   toggle: () => void;
@@ -25,6 +51,12 @@ const Navbar = ({ toggle }: Props) => {
 
   return (
     <>
+      <Banner>
+        <p>
+          We will draw the winner by the end of the year. Every solved problem
+          is awarded one ticket in the drawing. Good luck, and Merry Christmas!
+        </p>
+      </Banner>
       <Nav>
         <NavLink to="/">
           <img src={logo} width={100} />

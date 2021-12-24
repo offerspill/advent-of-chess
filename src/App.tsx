@@ -15,7 +15,6 @@ import Leaderboard from "./components/Leaderboard/Leaderboard";
 import About from "./components/About/About";
 import Footer from "./components/Footer/Footer";
 import Sidebar from "./components/Navbar/Sidebar";
-
 const Container = styled.div`
   min-height: 100vh;
   position: relative;

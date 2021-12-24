@@ -157,3 +157,26 @@ export const SignedInText = styled.span`
   color: black;
   white-space: nowrap;
 `;
+
+export const Banner = styled.div`
+  height: 64px;
+  background-color: #ff3314;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  p {
+    margin: 0;
+    padding: 0;
+
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
