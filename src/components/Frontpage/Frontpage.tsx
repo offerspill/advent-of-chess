@@ -45,9 +45,19 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
       <Info>
         <Fade top cascade>
           <div>
-            <h1>Solve chess problems every day until Christmas.</h1>
-            <h1>Win a chessboard signed by Magnus Carlsen.</h1>
-            <h1>The problems unlock at midnight UTC.</h1>
+            <h1>Advent of Chess 2020 is over!</h1>
+            <h1>Thanks to everyone who participated!</h1>
+            <h1>
+              Join our{" "}
+              <a
+                href="https://discord.gg/7GjpcUzG2w"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Discord server
+              </a>{" "}
+              for updates on who won
+            </h1>
           </div>
         </Fade>
         <Zoom bottom cascade>
