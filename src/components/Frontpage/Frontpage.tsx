@@ -45,7 +45,7 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
       <Info>
         <Fade top cascade>
           <div>
-            <h1>Advent of Chess 2020 is over!</h1>
+            <h1>Advent of Chess 2021 is over!</h1>
             <h1>Thanks to everyone who participated!</h1>
             <h1>
               Join our{" "}
