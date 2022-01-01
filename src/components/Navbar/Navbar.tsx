@@ -51,12 +51,6 @@ const Navbar = ({ toggle }: Props) => {
 
   return (
     <>
-      <Banner>
-        <p>
-          We will draw the winner by the end of the year. Every solved problem
-          is awarded one ticket in the drawing. Good luck, and Merry Christmas!
-        </p>
-      </Banner>
       <Nav>
         <NavLink to="/">
           <img src={logo} width={100} />
