@@ -46,17 +46,6 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
         <Fade top cascade>
           <div>
             <h1>Advent of Chess 2022 starts December 1st!</h1>
-            <h1>
-              Join our{" "}
-              <a
-                href="https://discord.gg/7GjpcUzG2w"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Discord server
-              </a>{" "}
-              for updates on who won
-            </h1>
           </div>
         </Fade>
         <Zoom bottom cascade>
