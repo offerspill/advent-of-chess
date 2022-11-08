@@ -42,7 +42,7 @@ function App() {
   const currentDate = currentDay.getUTCDate();
   const currentMonth = currentDay.getUTCMonth();
 
-  const query = `*[_type == $type && year == 2021]{author, body, title, day, answer}`;
+  const query = `*[_type == $type && year == 2022]{author, body, title, day, answer}`;
 
   useEffect(() => {
     const fetchPosts = () => {
