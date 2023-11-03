@@ -45,12 +45,8 @@ const Frontpage = ({ posts, ...props }: FrontpageProps) => {
       <Info>
         <Fade top cascade>
           <div>
-            <h1>There won't be any</h1>
-            <h1>Advent of Chess this year :(</h1>
-            <h1>
-              We're organizing <a href="https://monkasjakk.no">monkaSjakk</a>{" "}
-              Dec 1.–14.
-            </h1>
+            <h1>Advent of Chess is back</h1>
+            <h1>December 1st!</h1>
           </div>
         </Fade>
         <Zoom bottom cascade>
